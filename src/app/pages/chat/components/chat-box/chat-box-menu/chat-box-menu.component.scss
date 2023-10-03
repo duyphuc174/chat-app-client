@@ -1,0 +1,11 @@
+.menu-item {
+    padding: .5rem;
+    border-radius: 6px;
+    font-weight: 500;
+    &-click {
+        &:hover {
+            cursor: pointer;
+            background-color: var(--bs-gray-200);
+        }
+    }
+}

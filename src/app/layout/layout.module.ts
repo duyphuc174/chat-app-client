@@ -4,12 +4,14 @@ import { LayoutComponent } from './layout.component';
 import { RouterModule, Routes } from '@angular/router';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { AsideComponent } from './components/aside/aside.component';
+import { Routing } from '../pages/routing';
 
 const routes: Routes = [
   {
     path: '',
-    component: LayoutComponent
-  }
+    component: LayoutComponent,
+    children: Routing
+  },
 ]
 
 @NgModule({

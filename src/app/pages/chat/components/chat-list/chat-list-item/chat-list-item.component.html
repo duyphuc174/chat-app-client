@@ -1,0 +1,12 @@
+<div class="d-flex flex-row align-items-center p-2 rounded-2 chat-list-item" routerLinkActive="active" routerLink="/chat" [queryParams]="{id: id}">
+    <app-user-avatar [size]="50"></app-user-avatar>
+    <div class="d-flex flex-row align-items-center justify-content-between flex-grow-1 ms-2">
+        <div class="d-flex flex-column">
+            <span class="fs-8" style="font-weight: 500;">Nguyễn Duy Phúc</span>
+            <span style="font-size: 12px;">Xin chào . 10 phút</span>
+        </div>
+        <div>
+            <app-user-avatar [size]="14" [isHasBorder]="false" [isActive]="false"></app-user-avatar>
+        </div>
+    </div>
+</div>

@@ -7,4 +7,223 @@
 
 
 @import './assets/sass/custom.scss';
-@import '../node_modules/font-awesome/css/font-awesome.min.css'
+@import '../node_modules/font-awesome/css/font-awesome.min.css';
+
+@import "./node_modules/bootstrap/scss/bootstrap";
+@import "@ng-select/ng-select/scss/default.theme";
+
+.d-content {
+  display: contents !important;
+}
+
+// Ng-select
+.ng-select {
+    .ng-select-container {
+      height: auto !important;
+      border-radius: $input-border-radius;
+      border-color: $input-border-color;
+      padding: $input-btn-padding-y $input-btn-padding-x;
+      font-size: $input-btn-font-size;
+      line-height: $input-btn-line-height;
+  
+      .ng-value-container {
+        padding: 0;
+  
+        .ng-input {
+          padding: 0;
+        }
+      }
+  
+      .ng-arrow-wrapper {
+        padding: 0;
+      }
+  
+      .ng-clear-wrapper {
+        text-align: center;
+        width: 20px;
+        height: 20px;
+        padding: 0;
+  
+        .ng-clear {
+          width: 20px;
+          height: 20px;
+          font-size: 20px;
+          line-height: 20px;
+          font-weight: 700;
+        }
+  
+        +.ng-arrow-wrapper {
+          display: none;
+        }
+      }
+    }
+  
+    &.ng-select-lg {
+      .ng-select-container {
+        border-radius: $input-border-radius-lg;
+        padding: $input-btn-padding-y-lg $input-btn-padding-x-lg;
+        font-size: $input-btn-font-size-lg;
+      }
+  
+      .ng-option {
+        padding: $input-btn-padding-y-lg $input-btn-padding-x-lg;
+        font-size: $input-btn-font-size-lg;
+      }
+    }
+  
+    &.ng-select-sm {
+      .ng-select-container {
+        border-radius: $input-border-radius-sm;
+        padding: $input-btn-padding-y-sm $input-btn-padding-x-sm;
+        font-size: $input-btn-font-size-sm;
+      }
+  
+      .ng-option {
+        padding: $input-btn-padding-y-sm $input-btn-padding-x-sm;
+        font-size: $input-btn-font-size-sm;
+      }
+    }
+  
+    &.ng-select-table-editor {
+      .ng-select-container {
+        height: 30px !important;
+      }
+    }
+  
+    &.ng-select-opened {
+      .ng-select-container {
+        border-color: $gray-400 !important;
+      }
+    }
+  
+    &.criterion-select {
+      .ng-value {
+        width: 100%;
+      }
+    }
+  
+    &.ng-select-multiple {
+      .ng-value-container {
+        .ng-placeholder {
+          margin-top: 0.4rem;
+          padding: 0;
+        }
+      }
+  
+      .ng-select-container {
+        .ng-value-container {
+          padding: 0;
+          gap: 4px;
+  
+          .ng-value {
+            border-radius: $input-border-radius;
+            margin: 0;
+          }
+  
+          .ng-input {
+            padding: 0;
+          }
+  
+          .ng-placeholder {
+            margin: 0;
+            padding: 0
+          }
+        }
+  
+        .ng-placeholder {
+          margin: 0;
+          padding: 0
+        }
+      }
+    }
+  }
+  
+  .ng-select.ng-select-sm .ng-dropdown-panel .ng-option.ng-option-selected::after {
+    font-size: 24px;
+    line-height: 32px;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+  }
+  
+  .ng-dropdown-panel {
+    left: auto;
+    right: 0;
+    min-width: 18rem;
+    border: none;
+    box-shadow: 1px 1px 1px 1px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-bottom-left-radius: $input-border-radius;
+    border-bottom-right-radius: $input-border-radius;
+  
+    .ng-dropdown-header {
+      border-bottom: none;
+      margin-top: -8px;
+      padding: $input-btn-padding-y $input-btn-padding-x;
+  
+      input {
+        border: none;
+        border-radius: 22px;
+        line-height: $input-line-height;
+        padding: $input-padding-y $input-padding-x;
+        font-weight: $input-font-weight;
+        color: $input-color;
+        outline: none;
+        background-color: rgba($color: #000000, $alpha: 0.0625);
+      }
+    }
+  
+    .ng-option {
+      background-color: white;
+      position: relative;
+  
+      &.ng-option-selected {
+        padding-right: 40px !important;
+        background-color: white !important;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+  
+      &.ng-option-selected::after {
+        content: "\e99f";
+        font-family: "keenicons-solid" !important;
+        color: #50cd89;
+        position: absolute;
+        right: 0;
+        font-size: 32px;
+        line-height: 32px;
+        width: 32px;
+        height: 32px;
+        vertical-align: middle;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+  
+      &.ng-option-selected.ng-option-marked {
+        background-color: $ng-select-marked !important;
+        color: $ng-select-marked-text !important;
+      }
+    }
+  }
+  
+/* Tùy chỉnh thanh cuộn trên trình duyệt WebKit (Chrome, Safari) */
+::-webkit-scrollbar {
+    width: 5px; /* Độ rộng của thanh cuộn */
+    height: 10px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* Màu nền của thanh cuộn */
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: #888; /* Màu của thanh cuộn */
+    border-radius: 2px; /* Độ cong của thanh cuộn */
+  }
+
+.fw {
+  &-500 {
+    font-weight: 500;
+  }
+}

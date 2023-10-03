@@ -1,0 +1,50 @@
+<div class="d-flex flex-row h-100">
+    <div class="d-flex flex-column w-100" style="height: 100vh">
+        <div class="border-bottom d-flex justify-content-between align-items-center" style="height: 65px">
+            <div class="ms-3 d-flex align-items-center flex-row">
+                <app-user-avatar [size]="40"></app-user-avatar>
+                <span class="ms-2 fs-6" style="font-weight: 500">Nguyễn Duy Phúc</span>
+            </div>
+            <div class="chat-box-info me-3" (click)="showMenu()">
+                <i class="ki-solid ki-information-2 fs-2 text-info chat-box-info-icon"></i>
+            </div>
+        </div>
+        <div
+            class="flex-grow-1 p-3 d-flex flex-column flex-column-reverse"
+            style="overflow-y: scroll; background-color: var(--bs-gray-100)"
+        >
+            <ng-container *ngFor="let message of messages">
+                <app-chat-box-message
+                    class="d-content"
+                    [messages]="message.messages"
+                    [isOwner]="message.isOwner"
+                ></app-chat-box-message>
+            </ng-container>
+        </div>
+        <div class="border-top w-100 mt-auto">
+            <div class="p-2 w-100 d-flex flex-row">
+                <div class="me-1 d-flex align-items-center justify-content-center">
+                    <div class="rounded-circle d-flex align-items-center justify-content-center send-link" [ngbTooltip]="'Đính kèm file'">
+                        <i class="ki-solid ki-fasten text-primary fs-4"></i>
+                    </div>
+                </div>
+                <div class="flex-grow-1">
+                    <div class="position-relative comment d-flex  align-items-center justify-content-center">
+                        <textarea placeholder="Aa" type="text" rows="1" class="w-100 rounded-pill comment-input" style="resize: none;"></textarea>
+                        <div class="position-absolute top-50 end-0 translate-middle-y me-3" style="margin-top: 3px;">
+                            <i class="ki-solid ki-emoji-happy fw-bold fs-5 text-primary"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="ms-1 d-flex align-items-center justify-content-center">
+                    <div class="rounded-circle d-flex align-items-center justify-content-center send-link" [ngbTooltip]="'Gửi'">
+                        <i class="ki-solid ki-send text-primary fs-4"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="isShowMenu" class="border-start" style="width: 500px">
+        <app-chat-box-menu></app-chat-box-menu>
+    </div>
+</div>
