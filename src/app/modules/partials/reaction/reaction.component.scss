@@ -1,0 +1,43 @@
+.reaction {
+    padding: 6px;
+    position: relative;
+    &:hover {
+        &::before {
+            content: "";
+            position: absolute;
+            right: 10px;
+            top: 0;
+            cursor: default;
+            width: 80px;
+            height: 30px;
+            background-color: transparent;
+        }
+        cursor: pointer;
+        background-color: var(--bs-gray-200);
+        .reaction-list {
+            display: flex;
+        }
+    }
+
+    &-list {
+
+        cursor: default;
+        position: absolute;
+        right: -10px;
+        bottom: 100%;
+        display: none;
+        flex-direction: row;
+        padding: 2px 10px;
+        background-color: var(--bs-gray-100);
+        box-shadow: 0px 0px 6px -1px;
+        border-radius: 50rem;
+        &-item {
+            font-size: 24px;
+            border-radius: .5rem;
+            &:hover {
+                cursor: pointer;
+                background-color: var(--bs-gray-200);
+            }
+        }
+    }
+}

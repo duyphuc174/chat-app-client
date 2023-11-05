@@ -1,0 +1,66 @@
+<app-modal-header [title]="'Tạo nhóm chat'"></app-modal-header>
+<div class="card">
+    <div class="card-body">
+        <div class="mb-10">
+            <div class="d-flex flex-row align-items-center">
+                <label
+                    for="image"
+                    [ngbTooltip]="'Chọn ảnh nhóm'"
+                    class="d-flex align-items-center justify-content-center cursor-pointer border-gray-600 border border-1 rounded-circle p-3"
+                >
+                    <i class="ki-outline ki-instagram fs-2"></i>
+                </label>
+                <input id="image" type="file" hidden />
+                <div class="ms-2 w-100">
+                    <input placeholder="Nhập tên nhóm..." type="text" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="mb-5">
+            <div class="d-flex flex-row flex-wrap">
+                <ng-container *ngFor="let i of [1, 2, 3, 4, 5]">
+                    <div class="me-5 position-relative">
+                        <app-user-avatar [size]="46" [isActive]="false"></app-user-avatar>
+                        <div class="position-absolute top-0 start-100 translate-middle">
+                            <div class="rounded-circle badge p-2 bg-gray-200 bg-hover-light-danger text-hover-danger">
+                                <i class="ki-solid ki-cross fs-5"></i>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+                <!-- <div class="d-flex align-items-center justify-content-center" [ngbTooltip]="'T'">
+                    <div
+                        class="bg-hover-gray-400 d-flex align-items-center justify-content-center rounded-circle bg-gray-200 p-2"
+                    >
+                        <i class="ki-outline ki-plus fs-4 fw-bold text-primary"></i>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+        <div class="mb-5">
+            <app-search-input></app-search-input>
+        </div>
+        <div class="d-flex flex-column overflow-scroll" style="max-height: 30vh">
+            <ng-container *ngFor="let i of [1, 2, 3, 4, 5]">
+                <div class="mb-2">
+                    <label
+                        [ngClass]="check.checked ? 'bg-info text-gray-100' : 'btn-active-secondary'"
+                        for="{{ i }}"
+                        class="btn p-2 w-100"
+                    >
+                        <div class="d-flex flex-row align-items-center">
+                            <div class="me-3">
+                                <app-user-avatar [size]="36"></app-user-avatar>
+                            </div>
+                            <div>
+                                <span class="fs-5 fw-bold">Nguyễn Duy Phúc</span>
+                            </div>
+                        </div>
+                        <input #check id="{{ i }}" type="checkbox" hidden />
+                    </label>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>
+<app-modal-footer [buttonName]="'Tạo nhóm'"></app-modal-footer>

@@ -1,0 +1,56 @@
+//
+// Menu
+//
+
+// Aside menu
+.aside-menu {
+    // Basic
+    .menu {
+        gap: 4px;
+
+        .menu-section {
+            color: #4c4e6f !important;
+        }
+
+        > .menu-item {
+            padding: 0;
+            margin-left: 7px;
+            margin-right: 7px;
+
+			> .menu-link {
+                margin: 0 auto; 
+                flex-direction: column;
+                display: flex;
+                gap: 4px;
+                padding: 4px;
+                @include border-radius($border-radius);     
+
+				.menu-icon {					
+					justify-content: center;
+                    padding: 4px 0;       
+                    
+                    i {                        
+                        font-size: 24px !important;				
+                    }					
+				} 
+
+                .menu-title {					
+					flex-grow: 0;
+                    font-size: 16px;
+                    line-height: 16px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    margin-bottom: 4px;            
+				}   
+			}             
+
+            //$title-color, $icon-color, $bullet-color, $arrow-color, $bg-color, $all-links
+            @include menu-link-default-state( var(--#{$prefix}gray-800), var(--#{$prefix}gray-800), var(--#{$prefix}primary), var(--#{$prefix}primary), null, false);
+            @include menu-link-hover-state( $primary, var(--#{$prefix}primary), var(--#{$prefix}primary), var(--#{$prefix}primary), var(--#{$prefix}gray-100), false);
+            @include menu-link-here-state( $primary, var(--#{$prefix}primary), var(--#{$prefix}primary), var(--#{$prefix}primary), var(--#{$prefix}gray-200), false);
+            @include menu-link-show-state( $primary, var(--#{$prefix}primary), var(--#{$prefix}primary), var(--#{$prefix}primary), var(--#{$prefix}gray-200), false);
+            @include menu-link-active-state( $white, var(--#{$prefix}gray-800), var(--#{$prefix}primary), var(--#{$prefix}primary), var(--#{$prefix}gray-200) , false);
+		}
+    }     
+}

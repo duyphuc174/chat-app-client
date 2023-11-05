@@ -1,0 +1,26 @@
+.profile-card {
+    width: 70vw;
+
+    &-background {
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+}
+
+@media (max-width: 1024px) {
+    .flex-screen__avatar {
+        left: 50% !important;
+    }
+    .flex-screen {
+        flex-direction: column;
+        justify-content: center;
+        padding-top: 50px;
+        &__item {
+            margin-bottom: 10px;
+            &--child {
+                width: 0 !important;
+            }
+        }
+    }
+}

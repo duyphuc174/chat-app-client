@@ -1,18 +1,20 @@
-<a 
-    href="#" 
+<a
+    href="#"
     class="cursor-pointer d-inline-flex align-items-center justify-content-center"
-    [ngbTooltip]="'Nguyễn Duy Phúc'"
+    [ngbTooltip]="user?.name && canClick ? user.name : 'Nguyễn Duy Phúc'"
+>
+    <div
+        class="rounded-circle border border-{{borderSize}}"
+        [ngClass]="{ border: isHasBorder, 'position-relative': isActive }"
+        [style]="'width:' + size + 'px; height: ' + size + 'px;'"
     >
-    <div 
-        class="rounded-circle border border-1"
-        [ngClass]="{'border': isHasBorder, 'position-relative': isActive}"
-        [style]="'width:'+ size +'px; height: ' + size + 'px;'"
-    >
-        <img class="w-100 h-100 rounded-circle" style="object-fit: cover;" [src]="image" alt="">
-        <div class="position-absolute bottom-0 end-0" style="z-index: 1000;">
-            <div [style]="'width: '+ activeSize +'px; height: '+ activeSize +'px'" class="rounded-circle border border-2 border-white">
-                <div class="rounded-circle bg-success w-100 h-100">
-                </div>
+        <img class="w-100 h-100 rounded-circle" style="object-fit: cover" [src]="user?.avatar || image" alt="" />
+        <div *ngIf="isActive" class="position-absolute bottom-0 end-0" style="z-index: 1000">
+            <div
+                [style]="'width: ' + activeSize + 'px; height: ' + activeSize + 'px'"
+                class="rounded-circle border border-{{ size / 20 }} border-white"
+            >
+                <div class="rounded-circle bg-success w-100 h-100"></div>
             </div>
         </div>
     </div>

@@ -1,9 +1,9 @@
 .chat-list-item {
     cursor: pointer;
     &:hover {
-        background-color: var(--bs-gray-200);
+        background-color: var(--bs-gray-300);
     }
     &.active {
-        background-color: #e1f9fe;
+        background-color: var(--bs-gray-300);
     }
 }

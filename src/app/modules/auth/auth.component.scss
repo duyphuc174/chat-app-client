@@ -1,0 +1,32 @@
+.auth {
+
+    background: linear-gradient(to top right, var(--bs-info), var(--bs-primary));
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &-container {
+        width: 800px;
+        height: 600px;
+    }
+
+    &-background {
+        height: 100%;
+        background-image: url('../../../assets/media/bg/bg-2.jpg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        border-radius: .5rem 0 0 .5rem;
+    }
+
+    &-form {
+        height: 100%;
+    }
+}
+
+.card-form-custom {
+    border-radius: 0 .5rem .5rem 0;
+}

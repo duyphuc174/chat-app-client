@@ -1,0 +1,132 @@
+@use 'sass:map';
+@use 'sass:color';
+@use '../core/components/variables' as df;
+
+// Typography
+// Font
+$font-family-sans-serif: 'Nunito', sans-serif;
+$font-size-base: 1rem;
+
+$custom-font-sizes: (
+    lg: df.$font-size-lg,
+    sm: df.$font-size-sm,
+);
+
+$font-sizes: map.merge(df.$font-sizes, $custom-font-sizes);
+
+// Theme colors
+// Primary
+$primary: #605bff;
+$primary-active: #3732ff;
+$primary-light: #f8f5ff;
+$primary-light-dark: #2f264f;
+$primary-inverse: #ffffff;
+
+// Success
+$success: #50cd89;
+$success-active: #47be7d;
+$success-light: #e8fff3;
+$success-light-dark: #1c3238;
+$success-inverse: #ffffff;
+
+// Info
+$info: #6ea8fe;
+$info-active: #0d6efd;
+$info-light: #9ec5fe;
+$info-light-dark: #084298;
+$info-inverse: #ffffff;
+
+// Danger
+$danger: #f1416c;
+$danger-active: #d9214e;
+$danger-light: #fff5f8;
+$danger-light-dark: #3a2434;
+$danger-inverse: #ffffff;
+
+// Warning
+$warning: #d97706;
+$warning-active: #f1bc00;
+$warning-light: #fff8dd;
+$warning-light-dark: #392f28;
+$warning-inverse: #ffffff;
+
+// Badges
+$badge-font-size: 0.75rem;
+$badge-font-size-sm: 0.5rem;
+$badge-font-size-lg: 0.85rem;
+$badge-size: 1.5rem;
+$badge-size-sm: 1.25rem;
+$badge-size-lg: 1.75rem;
+
+// Position
+$custom-position-values: (
+    90: 90%,
+);
+$position-values: map.merge(df.$position-values, $custom-position-values);
+
+$custom-sizes: (
+    0: 0,
+    96: 96%,
+    96px: 96px,
+    24px: 24px,
+);
+$custom-sizes: map.merge(df.$custom-sizes, $custom-sizes);
+
+// Button + Forms
+$input-btn-padding-y: 0.375rem;
+$input-btn-padding-x: 0.75rem;
+$input-btn-font-size: 1.145rem;
+$input-btn-line-height: 1.5;
+
+$input-btn-padding-y-sm: 0.25rem;
+$input-btn-padding-x-sm: 0.5rem;
+$input-btn-font-size-sm: 1rem;
+$input-btn-line-height-sm: 1.5;
+
+$input-btn-padding-y-lg: 0.5rem;
+$input-btn-padding-x-lg: 1rem;
+$input-btn-font-size-lg: 1.43rem;
+$input-btn-line-height-lg: 1.5;
+
+// Button
+$btn-padding-x: $input-btn-padding-x;
+$btn-padding-x-sm: $input-btn-padding-x-sm;
+$btn-padding-x-lg: $input-btn-padding-x-lg;
+
+// Forms
+$input-border-color: df.$gray-500;
+$form-label-font-weight: 600;
+$form-label-color: var(--#{df.$prefix}gray-900);
+$form-check-label-color: var(--#{df.$prefix}gray-700);
+
+// Form checks
+$form-check-input-width: 1.2rem;
+$form-check-input-width-sm: 1rem;
+$form-check-input-width-lg: 26rem;
+
+// Ng-select
+$ng-select-marked: df.$gray-100;
+$ng-select-height: auto;
+
+// Card
+// $card-py: 1rem;
+// $card-px: 1rem;
+// $card-header-py: 0rem;
+// $card-border-enabled: true;
+// $card-header-height: 64px;
+
+// Table
+$table-cell-padding-y: 0.5rem;
+$table-cell-padding-x: 0.5rem;
+$table-cell-padding-y-sm: 0.25rem;
+$table-cell-padding-x-sm: 0.25rem;
+$table-border-color: df.$gray-300;
+
+// Scroll
+$scrollbar-color: transparent;
+$scrollbar-hover-color: darken(df.$gray-200, 2%);
+
+$progress-bg: var(--#{df.$prefix}gray-300);
+
+// Modal
+// $modal-inner-padding: 24px;

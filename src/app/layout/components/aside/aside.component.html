@@ -1,31 +1,67 @@
-<div id="aside" class="d-flex flex-column" style="width: 4rem; height: 100vh">
-  <div class="text-center w-100 py-3">
-    <span class="fw-bold">LOGO</span>
-  </div>
-  <div class="d-flex flex-column justify-content-between">
-    <div class="aside-menu">
-      <div class="aside-menu-item py-2">
-        <a class="aside-menu-item-link" routerLink="/home" routerLinkActive="active">
-          <i class="ki-outline ki-element-11 fs-5"></i>
-        </a>
-      </div>
-      <div class="aside-menu-item py-2">
-        <a class="aside-menu-item-link" routerLink="/chat" routerLinkActive="active">
-          <i class="ki-outline ki-messages fs-5"></i>
-        </a>
-      </div>
-      <div class="aside-menu-item py-2">
-        <a class="aside-menu-item-link">
-          <i class="ki-outline ki-notification fs-5"></i>
-        </a>
-      </div>
+<div id="aside" class="border-end bg-primary">
+    <div class="d-flex flex-column justify-content-between h-100">
+        <div class="d-flex align-items-center justify-content-center py-4 border-bottom">
+            <a class="cursor-pointer">
+                <i class="ki-solid ki-message-programming text-info" style="font-size: 3rem"></i>
+            </a>
+        </div>
+        <div class="d-flex flex-column mt-5">
+            <div class="d-flex flex-column">
+                <div class="text-center p-1">
+                    <a
+                        routerLink="/home"
+                        routerLinkActive="bg-info"
+                        class="bg-hover-info rounded-2 px-3 py-4 d-flex align-items-center justify-content-center"
+                    >
+                        <i class="ki-outline ki-messages fs-1 text-gray-200"></i>
+                    </a>
+                </div>
+
+                <div class="text-center p-1">
+                    <a
+                        routerLink="/chat"
+                        routerLinkActive="bg-info"
+                        class="bg-hover-info rounded-2 px-3 py-4 d-flex align-items-center justify-content-center"
+                    >
+                        <i class="ki-outline ki-messages fs-1 text-gray-300"></i>
+                    </a>
+                </div>
+
+                <div class="text-center p-1">
+                    <a
+                        href=""
+                        class="bg-hover-info rounded-2 px-3 py-4 d-flex align-items-center justify-content-center"
+                    >
+                        <i class="ki-outline ki-messages fs-1 text-gray-300"></i>
+                    </a>
+                </div>
+            </div>
+            <!-- <div class="d-flex flex-column">
+            <div class="text-center p-1">
+                <a href="" class="bg-hover-grayinfonded-2 px-3 py-4 d-flex align-items-center justify-content-center">
+                    <i class="ki-outline ki-notification fs-1 text-gray-300"></i>
+                </a>
+            </div>
+        </div> -->
+        </div>
+        <div class="mt-auto mb-5">
+            <div class="d-flex flex-column">
+                <div class="d-flex align-items-center justify-content-center">
+                    <div class="w-100 d-flex align-items-center justify-content-center py-3">
+                        <a class="">
+                            <i class="ki-outline ki-notification fs-1 text-gray-200"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center justify-content-center mb-5">
+                    <app-user-inner></app-user-inner>
+                </div>
+                <div class="d-flex align-items-center justify-content-center">
+                    <a class="cursor-pointer" (click)="changeMode()">
+                        <i class="ki-outline ki-night-day fs-1 text-gray-200"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="mt-auto d-flex align-items-center justify-content-center">
-    <div class="w-100 d-flex align-items-center justify-content-center py-3 ">
-      <a class="">
-        <i class="ki-outline ki-black-left-line fs-5 text-danger"></i>
-      </a>
-    </div>
-  </div>
 </div>

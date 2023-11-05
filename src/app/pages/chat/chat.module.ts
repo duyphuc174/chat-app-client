@@ -13,27 +13,29 @@ import { RouterModule } from '@angular/router';
 import { ChatBoxMessageComponent } from './components/chat-box/chat-box-message/chat-box-message.component';
 import { ChatBoxMenuComponent } from './components/chat-box/chat-box-menu/chat-box-menu.component';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
-
-
+import { ChatConversationCreateComponent } from './components/chat-conversation-create/chat-conversation-create.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
-  declarations: [
-    ChatComponent,
-    ChatListComponent,
-    ChatListInboxComponent,
-    ChatListRequestComponent,
-    ChatBoxComponent,
-    ChatListItemComponent,
-    ChatBoxMessageComponent,
-    ChatBoxMenuComponent
-  ],
-  imports: [
-    CommonModule,
-    ChatRoutingModule,
-    PartialModule,
-    NgSelectModule,
-    RouterModule,
-    NgbTooltipModule
-  ]
+    declarations: [
+        ChatComponent,
+        ChatListComponent,
+        ChatListInboxComponent,
+        ChatListRequestComponent,
+        ChatBoxComponent,
+        ChatListItemComponent,
+        ChatBoxMessageComponent,
+        ChatBoxMenuComponent,
+        ChatConversationCreateComponent,
+    ],
+    imports: [
+        CommonModule,
+        ChatRoutingModule,
+        PartialModule,
+        NgSelectModule,
+        RouterModule,
+        NgbTooltipModule,
+        ModalModule,
+    ],
 })
-export class ChatModule { }
+export class ChatModule {}

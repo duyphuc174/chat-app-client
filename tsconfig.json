@@ -5,10 +5,23 @@
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noImplicitReturns": true,
+//    "strict": true,
+    /*
+    All options below are FALSE by default
+    BUT recommend to use TRUE 🤣
+    */
+    "noImplicitAny": false,
+    // "strictNullChecks": true,
+    // "strictFunctionTypes": true,
+    // "strictBindCallApply": true,
+    // "strictPropertyInitialization": true,
+    // "noImplicitThis": true,
+    // "alwaysStrict": true,
+    // typescript v4.4
+    // "useUnknownInCatchVariables": true,
+//    "strictNullChecks": false,
+//    "strictPropertyInitialization": false,
+    "noImplicitReturns": false,
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
     "declaration": false,
@@ -16,18 +29,20 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "ES2022",
-    "module": "ES2022",
-    "useDefineForClassFields": false,
+    "target": "es2020",
+    "module": "es2020",
     "lib": [
-      "ES2022",
-      "dom"
+      "es2018",
+      "es2019",
+      "dom",
+      "esnext.bigint"
     ]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "strictTemplates": true
+    "strictTemplates": true,
+    "enableIvy": true
   }
 }

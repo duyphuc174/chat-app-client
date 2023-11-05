@@ -1,23 +1,30 @@
-<div style="width: 100vw; height: 100vh;" class="d-flex align-items-center justify-content-center">
-    <div class="card" style="width: 500px;">
-        <div class="card-body">
-            <form action="" class="d-flex flex-column">
-                <div class="form-group mb-3">
-                    <input type="text" class="form-control fs-6" placeholder="Email">
-                </div>
-                <div class="form-group mb-3">
-                    <input type="text" class="form-control fs-6" placeholder="Mật khẩu">
-                </div>
-                <button class="btn btn-primary mb-3">
-                    <span class="fw-bold fs-6 text-white">Đăng nhập</span>
-                </button>
-                <div class="text-center pb-3 border-bottom mb-3">
-                    <a href="#" class="text-decoration-none">Quên mật khẩu?</a>
-                </div>
-                <div class="d-inline-flex justify-content-center">
-                    <a href="#" class="btn btn-danger fw-bold">Tạo tài khoản mới</a>
-                </div>
-            </form>
-        </div>
+<form class="" [formGroup]="form">
+    <div class="text-center mb-3">
+        <h3 class="fw-bold text-primary" (click)="show()">Đăng nhập</h3>
     </div>
-</div>
+    <div class="mb-3">
+        <label for="" class="form-label">Tài khoản</label>
+        <input type="text" class="form-control" formControlName="account" placeholder="Nhập tài khoản của bạn..." />
+        <!-- <app-error-message-form
+            [control]="form.controls['account']"
+            [message]="'Bạn chưa nhập tài khoản!'"
+        ></app-error-message-form> -->
+    </div>
+    <div class="mb-3">
+        <label for="" class="form-label">Mật khẩu</label>
+        <input type="password" class="form-control" formControlName="password" placeholder="******" />
+    </div>
+    <div class="mb-4 text-center">
+        <span
+            >Bạn chưa có tài khoản?
+            <a routerLink="/auth/register" class="text-decoration-none">Đăng ký</a>
+        </span>
+    </div>
+
+    <input type="text" ngbDatepicker>
+    <div class="text-center">
+        <button (click)="submit()" class="btn btn-info text-white fw-bold" type="submit" style="width: 180px">
+            <span>Đăng nhập</span>
+        </button>
+    </div>
+</form>

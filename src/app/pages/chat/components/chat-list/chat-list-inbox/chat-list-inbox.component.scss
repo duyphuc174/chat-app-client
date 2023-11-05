@@ -1,0 +1,9 @@
+.add-conversation {
+    width: 32px;
+    height: 32px;
+    background-color: var(--bs-gray-300);
+    &:hover {
+        cursor: pointer;
+        background-color: var(--bs-gray-500);
+    }
+}
