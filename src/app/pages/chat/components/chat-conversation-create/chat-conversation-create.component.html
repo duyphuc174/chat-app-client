@@ -6,13 +6,17 @@
                 <label
                     for="image"
                     [ngbTooltip]="'Chọn ảnh nhóm'"
-                    class="d-flex align-items-center justify-content-center cursor-pointer border-gray-600 border border-1 rounded-circle p-3"
+                    class="d-flex align-items-center justify-content-center cursor-pointer border-gray-400 border bg-gray-200 rounded-circle p-4"
                 >
-                    <i class="ki-outline ki-instagram fs-2"></i>
+                    <i class="ki-outline ki-instagram text-gray-600 fs-1"></i>
                 </label>
                 <input id="image" type="file" hidden />
-                <div class="ms-2 w-100">
-                    <input placeholder="Nhập tên nhóm..." type="text" class="form-control" />
+                <div class="ms-4 w-100">
+                    <input
+                        placeholder="Nhập tên nhóm..."
+                        type="text"
+                        class="form-control border-gray-300 bg-gray-300 w-100 rounded-2 py-3 px-4 fs-4"
+                    />
                 </div>
             </div>
         </div>
@@ -22,7 +26,7 @@
                     <div class="me-5 position-relative">
                         <app-user-avatar [size]="46" [isActive]="false"></app-user-avatar>
                         <div class="position-absolute top-0 start-100 translate-middle">
-                            <div class="rounded-circle badge p-2 bg-gray-200 bg-hover-light-danger text-hover-danger">
+                            <div class="rounded-circle badge p-1 bg-gray-200 bg-hover-light-danger text-hover-danger">
                                 <i class="ki-solid ki-cross fs-5"></i>
                             </div>
                         </div>
@@ -46,11 +50,11 @@
                     <label
                         [ngClass]="check.checked ? 'bg-info text-gray-100' : 'btn-active-secondary'"
                         for="{{ i }}"
-                        class="btn p-2 w-100"
+                        class="btn border px-3 py-4 w-100"
                     >
                         <div class="d-flex flex-row align-items-center">
                             <div class="me-3">
-                                <app-user-avatar [size]="36"></app-user-avatar>
+                                <app-user-avatar [size]="40"></app-user-avatar>
                             </div>
                             <div>
                                 <span class="fs-5 fw-bold">Nguyễn Duy Phúc</span>

@@ -23,26 +23,23 @@ export class LoginComponent implements OnInit {
     initForm() {
         this.form = this.fb.group({
             account: ['', Validators.required],
-            password: ['', Validators.required]
+            password: ['', Validators.required],
         });
     }
 
     show() {
         console.log(this.authService.currentUserValue);
-        
     }
 
     submit() {
         const account = this.form.value.account;
         const password = this.form.value.password;
-        this.authService.login({account, password}).pipe(first()).subscribe((res) => {
-            if(res) {
+        this.authService.login({ account, password }).subscribe((res) => {
+            if (res) {
                 console.log(res);
-                
+
                 this.router.navigate(['/home']).then();
             }
-        })
+        });
     }
-
-
 }

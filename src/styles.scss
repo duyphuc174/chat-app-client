@@ -12,3 +12,9 @@
 .d-content {
     display: contents !important;
 }
+
+@media (max-width: 1024px) {
+    .d-hidden {
+        display: none !important;
+    }
+}

@@ -4,7 +4,7 @@ const Routing: Routes = [
     {
         path: '',
         redirectTo: 'chat',
-        pathMatch: 'full'
+        pathMatch: 'full',
     },
     {
         path: 'chat',
@@ -17,7 +17,11 @@ const Routing: Routes = [
     {
         path: 'profile',
         loadChildren: () => import('./profile/profile.module').then((m) => m.ProfileModule),
-    }
+    },
+    {
+        path: 'friends',
+        loadChildren: () => import('./friends/friends.module').then((m) => m.FriendsModule),
+    },
 ];
 
 export { Routing };

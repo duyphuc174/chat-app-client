@@ -1,0 +1,10 @@
+<div class="friend-find mt-10">
+    <div class="mb-10">
+        <app-search-input></app-search-input>
+    </div>
+    <ng-container *ngFor="let i of [1, 2, 3, 4, 5]">
+        <div class="mb-5">
+            <app-friends-item [firstButtonTitle]="'Thêm bạn bè'" [secondButtonTitle]="'Nhắn tin'"></app-friends-item>
+        </div>
+    </ng-container>
+</div>
