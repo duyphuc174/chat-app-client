@@ -9,6 +9,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { UserInnerComponent } from './components/user-inner/user-inner.component';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { PartialModule } from '../modules/partials/partial.module';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 const routes: Routes = [
     {
@@ -20,6 +21,6 @@ const routes: Routes = [
 
 @NgModule({
     declarations: [LayoutComponent, NavigationComponent, AsideComponent, HeaderComponent, UserInnerComponent],
-    imports: [CommonModule, RouterModule.forChild(routes), NgbDropdownModule, PartialModule],
+    imports: [CommonModule, ModalModule, RouterModule.forChild(routes), NgbDropdownModule, PartialModule],
 })
 export class LayoutModule {}

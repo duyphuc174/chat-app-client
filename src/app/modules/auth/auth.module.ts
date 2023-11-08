@@ -8,9 +8,18 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PartialModule } from '../partials/partial.module';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 @NgModule({
     declarations: [AuthComponent, LoginComponent, RegisterComponent],
-    imports: [CommonModule, PartialModule, AuthRoutingModule, ReactiveFormsModule, HttpClientModule, NgbDatepickerModule],
+    imports: [
+        CommonModule,
+        PartialModule,
+        AuthRoutingModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        NgbDatepickerModule,
+        BsDatepickerModule,
+    ],
 })
 export class AuthModule {}

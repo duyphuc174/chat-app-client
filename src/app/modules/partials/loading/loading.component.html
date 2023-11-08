@@ -1,0 +1,5 @@
+<div class="text-center" *ngIf="isLoading$ | async">
+    <div class="spinner-border spinner-border-{{ size }} {{fontSize}}">
+    </div>
+    <span class="ms-3 {{fontSize}} {{weight}}">{{text}}</span>
+</div>

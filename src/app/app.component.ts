@@ -13,11 +13,14 @@ export class AppComponent implements OnInit {
     constructor(private auth: AuthService, private router: Router) {}
 
     ngOnInit(): void {
-        const res = this.auth.getAuthFromLocalStorage();
-        if (res) {
-            this.router.navigate(['chat']).then();
-        } else {
-            this.router.navigate(['auth/login']);
-        }
+        this.auth.getUserByToken().subscribe((res) => {
+            if (res) {
+                if (this.router.url.includes('auth/login') || this.router.url.includes('auth/register')) {
+                    this.router.navigate(['chat']);
+                }
+            } else {
+                this.router.navigate(['/']);
+            }
+        });
     }
 }

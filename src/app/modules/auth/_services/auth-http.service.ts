@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { UserModel } from '../_model/auth.model';
 import { environment } from 'src/environments/environment';
+import { ICreateUser } from '../_model/auth.model';
 
-const API_AUTH_URL = `http://127.0.0.1:8000/api/auth`;
+const API_AUTH_URL = `${environment.apiUrl}/auth`;
 
 @Injectable({
     providedIn: 'root',
@@ -14,5 +14,18 @@ export class AuthHttpService {
 
     login(body: { account: string; password: string }): Observable<any> {
         return this.http.post<any>(`${API_AUTH_URL}/login`, body);
+    }
+
+    register(body: ICreateUser) {
+        return this.http.post<any>(`${API_AUTH_URL}/register`, body);
+    }
+
+    getUserByToken(token: string): Observable<any> {
+        const httpHeaders = new HttpHeaders({
+            Authorization: `Bearer ${token}`,
+        });
+        return this.http.get<any>(`${API_AUTH_URL}/token`, {
+            headers: httpHeaders,
+        });
     }
 }

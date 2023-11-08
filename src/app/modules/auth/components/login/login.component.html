@@ -4,15 +4,64 @@
     </div>
     <div class="mb-3">
         <label for="" class="form-label">Tài khoản</label>
-        <input type="text" class="form-control" formControlName="account" placeholder="Nhập tài khoản của bạn..." />
-        <!-- <app-error-message-form
-            [control]="form.controls['account']"
+        <input
+            type="text"
+            class="form-control"
+            formControlName="account"
+            placeholder="Nhập tài khoản của bạn..."
+            [ngClass]="{
+            'is-invalid': controls['account'].invalid,
+            'is-valid': controls['account'].valid,
+          }"
+        />
+        <app-error-message-form
+            [control]="controls['account']"
             [message]="'Bạn chưa nhập tài khoản!'"
-        ></app-error-message-form> -->
+            [validation]="'required'"
+        ></app-error-message-form>
+        <app-error-message-form
+            [control]="controls['account']"
+            [message]="'Tài khoản phải tối thiểu 6 ký tự!'"
+            [validation]="'minlength'"
+        ></app-error-message-form>
+        <app-error-message-form
+            [control]="controls['account']"
+            [message]="'Tài khoản tối đa 50 ký tự!'"
+            [validation]="'maxlength'"
+        ></app-error-message-form>
+        <app-error-message-form
+            [control]="controls['account']"
+            [message]="'Tài khoản phải là email!'"
+            [validation]="'email'"
+        ></app-error-message-form>
     </div>
     <div class="mb-3">
         <label for="" class="form-label">Mật khẩu</label>
-        <input type="password" class="form-control" formControlName="password" placeholder="******" />
+        <input
+            type="password"
+            class="form-control"
+            formControlName="password"
+            placeholder="******"
+            [ngClass]="{
+            'is-invalid': controls['password'].invalid,
+            'is-valid': controls['password'].valid,
+          }"
+        />
+        <app-error-message-form
+            [control]="controls['password']"
+            [message]="'Bạn chưa nhập mật khẩu!'"
+            [validation]="'required'"
+        ></app-error-message-form>
+        <app-error-message-form
+            [control]="controls['password']"
+            [message]="'Mật khẩu phải tối thiểu 6 ký tự!'"
+            [validation]="'minlength'"
+        ></app-error-message-form>
+        <app-error-message-form
+            [control]="controls['password']"
+            [message]="'Mật khẩu tối đa 50 ký tự!'"
+            [validation]="'maxlength'"
+        ></app-error-message-form>
     </div>
     <div class="mb-4 text-center">
         <span
@@ -22,8 +71,9 @@
     </div>
 
     <div class="text-center">
-        <button (click)="submit()" class="btn btn-info text-white fw-bold" type="submit" style="width: 180px">
-            <span>Đăng nhập</span>
+        <button (click)="submit()" class="btn btn-primary fw-bold w-200px" type="submit" [disabled]="form.invalid">
+            <span *ngIf="!(isLoading$ | async)">Đăng nhập</span>
+            <app-loading [isLoading$]="isLoading$" [text]="'Đang đăng nhập'"></app-loading>
         </button>
     </div>
 </form>

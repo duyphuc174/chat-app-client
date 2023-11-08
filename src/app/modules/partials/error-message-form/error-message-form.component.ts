@@ -7,6 +7,7 @@ import { AbstractControl } from '@angular/forms';
     styleUrls: ['./error-message-form.component.scss'],
 })
 export class ErrorMessageFormComponent {
-    @Input() control!: AbstractControl;
-    @Input() message!: string;
+    @Input() control: AbstractControl;
+    @Input() message: string;
+    @Input() validation: string;
 }

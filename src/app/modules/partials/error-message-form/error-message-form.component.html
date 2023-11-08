@@ -1,3 +1,3 @@
-<div class="text-danger" *ngIf="control.hasError">
-    <span>{{ message }}</span>
+<div class="text-danger" *ngIf="control.hasError(validation) && (control.dirty || control.touched)">
+    <span class="alert p-0 mt-2">{{ message }}</span>
 </div>

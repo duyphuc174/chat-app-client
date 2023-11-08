@@ -10,9 +10,13 @@ import { Router } from '@angular/router';
     styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-    form!: UntypedFormGroup;
+    form: UntypedFormGroup;
     isLoadingSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     isLoading$: Observable<boolean> = this.isLoadingSubject.asObservable();
+
+    get controls() {
+        return this.form.controls;
+    }
 
     constructor(private fb: UntypedFormBuilder, private authService: AuthService, private router: Router) {}
 
@@ -22,8 +26,19 @@ export class LoginComponent implements OnInit {
 
     initForm() {
         this.form = this.fb.group({
-            account: ['', Validators.required],
-            password: ['', Validators.required],
+            account: [
+                '',
+                Validators.compose([
+                    Validators.required,
+                    Validators.email,
+                    Validators.minLength(6),
+                    Validators.maxLength(50),
+                ]),
+            ],
+            password: [
+                '',
+                Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(50)]),
+            ],
         });
     }
 
@@ -32,13 +47,13 @@ export class LoginComponent implements OnInit {
     }
 
     submit() {
+        this.isLoadingSubject.next(true);
         const account = this.form.value.account;
         const password = this.form.value.password;
         this.authService.login({ account, password }).subscribe((res) => {
             if (res) {
-                console.log(res);
-
                 this.router.navigate(['/home']).then();
+                this.isLoadingSubject.next(false);
             }
         });
     }

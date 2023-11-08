@@ -1,9 +1,9 @@
 <div class="d-flex flex-row h-100">
     <div class="d-flex flex-column w-100" style="height: 100vh">
         <div class="border-bottom d-flex justify-content-between align-items-center" style="height: 65px">
-            <div class="ms-3 d-flex align-items-center flex-row">
-                <app-user-avatar [size]="40"></app-user-avatar>
-                <span class="ms-2 fs-6" style="font-weight: 500">Nguyễn Duy Phúc</span>
+            <div class="ms-3 d-flex align-items-center flex-row" *ngIf="receiver$ | async as receiver">
+                <app-user-avatar [user]="receiver" [size]="40"></app-user-avatar>
+                <span class="ms-2 fs-6" style="font-weight: 500">{{ receiver.name }}</span>
             </div>
             <div class="chat-box-info me-3" (click)="showMenu()">
                 <i class="ki-solid ki-information-2 fs-2 text-info chat-box-info-icon"></i>
@@ -13,8 +13,10 @@
             class="flex-grow-1 p-3 d-flex flex-column flex-column-reverse"
             style="overflow-y: scroll; background-color: var(--bs-gray-100)"
         >
-            <ng-container *ngFor="let dt of data">
-                <app-chat-box-message [data]="dt" class="d-content"></app-chat-box-message>
+            <ng-container *ngIf="!(receiver$ | async)">
+                <ng-container *ngFor="let dt of data">
+                    <app-chat-box-message [data]="dt" class="d-content"></app-chat-box-message>
+                </ng-container>
             </ng-container>
         </div>
 

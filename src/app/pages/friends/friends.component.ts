@@ -1,10 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/modules/auth';
 
 @Component({
-  selector: 'app-friends',
-  templateUrl: './friends.component.html',
-  styleUrls: ['./friends.component.scss']
+    selector: 'app-friends',
+    templateUrl: './friends.component.html',
+    styleUrls: ['./friends.component.scss'],
 })
-export class FriendsComponent {
+export class FriendsComponent implements OnInit {
+    constructor(private auth: AuthService) {}
 
+    ngOnInit(): void {}
+
+    click() {
+        console.log(111);
+
+        this.auth.getUserByToken();
+    }
 }

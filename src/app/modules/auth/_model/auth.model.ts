@@ -15,7 +15,7 @@ export class UserModel {
         this.name = data.fullName;
         this.account = data.account;
         this.password = data.password || '';
-        this.avatar = data.avatar || '';
+        this.avatar = data.avatar ? data.avatar : './assets/media/avatars/avatar-blank.jpg';
         this.isActive = data.active || true;
         this.description = data.description || '';
         this.birthday = data.dateOfBirth || null;
@@ -26,4 +26,12 @@ export class UserModel {
 export enum UserRole {
     USER = 'user',
     ADMIN = 'admin',
+}
+
+export interface ICreateUser {
+    account: string;
+    password: string;
+    password_confirmation: string;
+    fullName: string;
+    dateOfBirth: string;
 }

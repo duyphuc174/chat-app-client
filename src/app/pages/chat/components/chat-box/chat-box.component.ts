@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { UserModel } from 'src/app/modules/auth/_model/auth.model';
+import { ProfileService } from 'src/app/pages/profile/_services/profile.service';
 
 @Component({
     selector: 'app-chat-box',
@@ -8,6 +10,10 @@ import { UserModel } from 'src/app/modules/auth/_model/auth.model';
     styleUrls: ['./chat-box.component.scss'],
 })
 export class ChatBoxComponent implements OnInit {
+    userId: number;
+    receiverSubject: BehaviorSubject<UserModel> = new BehaviorSubject<UserModel>(null);
+    receiver$: Observable<UserModel> = this.receiverSubject.asObservable();
+
     user1: UserModel;
     user2: UserModel;
     data = [];
@@ -33,7 +39,20 @@ export class ChatBoxComponent implements OnInit {
 
     isShowMenu: boolean = true;
 
-    constructor(private router: Router) {}
+    constructor(
+        private router: Router,
+        private activatedRoute: ActivatedRoute,
+        private profileService: ProfileService,
+    ) {
+        this.activatedRoute.params.subscribe((param) => {
+            this.userId = +param.id;
+            if (this.userId) {
+                this.profileService.getUser(this.userId).subscribe((user) => {
+                    this.receiverSubject.next(user);
+                });
+            }
+        });
+    }
     ngOnInit(): void {
         this.messages.reverse();
 

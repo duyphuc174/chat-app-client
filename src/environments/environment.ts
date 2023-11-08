@@ -1,6 +1,6 @@
 export const environment = {
-    production: true,
+    production: false,
     appVersion: 'v1.0',
-    apiUrl: 'http://127.0.0.1:8000/api',
     USERDATA_KEY: 'auth174',
+    apiUrl: 'http://127.0.0.1:8000/api',
 };

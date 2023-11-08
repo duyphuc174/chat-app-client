@@ -1,44 +1,81 @@
-<div class="profile-card mb-7">
-    <div class="w-100 profile-card-background" style="height: 200px; background-image: url('../../../../assets/media/bg/bg-3.png');">
-
-    </div>
-    <div class="card">
-        <div class="card-body position-relative px-15 pb-12">
-            <div class="position-absolute top-0 translate-middle flex-screen__avatar" style="left: 130px;">
-                <app-user-avatar [size]="150" [canClick]="false" [borderSize]="5" [isActive]="false"></app-user-avatar>
-            </div>
-            <div class="d-flex flex-screen align-items-center justify-content-between">
-                <div class="d-flex flex-screen__item">
-                    <span class="w-150px flex-screen__item--child"></span>
-                    <span class="ms-3 fs-1 fw-bold">Nguyễn Duy Phúc</span>
-                </div>
-                <div class="d-flex flex-row">
-                    <button class="btn btn-primary me-5">Thêm bạn bè</button>
-                    <button class="btn btn-secondary">Nhắn tin</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-xxl-4 col-xl-5 col-lg-5 col-12">
+<ng-container *ngIf="!(isLoading$ | async)">
+    <div class="profile-card mb-7" *ngIf="user$ | async as user">
+        <div
+            class="w-100 profile-card-background"
+            style="height: 200px; background-image: url('../../../../assets/media/bg/bg-3.png')"
+        ></div>
         <div class="card">
-
-            <div class="card-body">
-                <div class="d-flex flex-column border-bottom border-2 pb-3">
-                    <span class="fw-bold fs-2 mb-2">Giới thiệu</span>
-                    <span class="text-center w-100">Xin chào</span>
+            <div class="card-body position-relative px-15 pb-12">
+                <div
+                    class="position-absolute top-0 translate-middle flex-screen__avatar position-relative"
+                    style="left: 130px"
+                >
+                    <app-user-avatar
+                        [user]="user"
+                        [isActive]="false"
+                        [size]="150"
+                        [canClick]="false"
+                        [borderSize]="5"
+                    ></app-user-avatar>
+                    <div class="position-absolute bottom-0 end-0" *ngIf="userLogged.id === profileId">
+                        <label
+                            class="cursor-pointer bagde rounded-circle p-2 bg-gray-300 bg-hover-gray-400 d-flex align-items-center justify-content-center border"
+                            for="avatar"
+                        >
+                            <i class="ki-solid ki-pencil fs-4 text-primary"></i>
+                            <input
+                                hidden
+                                (change)="changeAvatar($event)"
+                                id="avatar"
+                                type="file"
+                                name="image"
+                                accept=".png, .jpg, .jpeg"
+                            />
+                        </label>
+                    </div>
                 </div>
-                <div class="d-flex flex-column">
-                    
+                <div class="d-flex flex-screen align-items-center justify-content-between">
+                    <div class="d-flex flex-screen__item">
+                        <span class="w-150px flex-screen__item--child"></span>
+                        <span class="ms-3 fs-1 fw-bold">{{ user.name }}</span>
+                    </div>
+                    <div class="d-flex flex-row">
+                        <button class="btn btn-primary me-5">Thêm bạn bè</button>
+                        <button class="btn btn-secondary">Nhắn tin</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-xxl-8 col-xl-7 col-lg-7 col-12">
-        <div class="card">
-            <div class="card-body"></div>
+
+    <div class="row" *ngIf="user$ | async as user">
+        <div class="col-xxl-4 col-xl-5 col-lg-5 col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex flex-column border-bottom border-2 pb-3 mb-5">
+                        <span class="fw-bold fs-2 mb-2">Giới thiệu</span>
+                        <span class="text-center w-100">{{ user.description }}</span>
+                    </div>
+                    <div class="d-flex flex-column">
+                        <div class="mb-3 fs-4 d-flex flex-row align-items-center text-gray-800">
+                            <i class="ki-outline ki-gift me-2 fs-3 fw-bold mb-1 text-gray-700"></i>
+                            <span
+                                >Sinh nhật <span class="fw-bold">{{ user.birthday | date : 'dd/MM/yyyy' }}</span></span
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xxl-8 col-xl-7 col-lg-7 col-12">
+            <div class="card">
+                <div class="card-body"></div>
+            </div>
         </div>
     </div>
-</div>
+</ng-container>
+<ng-container *ngIf="isLoading$ | async">
+    <div class="w-100">
+        <app-loading [isLoading$]="isLoading$"></app-loading>
+    </div>
+</ng-container>

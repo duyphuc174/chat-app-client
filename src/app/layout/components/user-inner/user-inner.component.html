@@ -1,7 +1,7 @@
-<div>
+<div *ngIf="user$ | async as userLogged">
     <div ngbDropdown #userDropMenu="ngbDropdown">
         <div ngbDropdownToggle class="w-50px h-50px rounded-circle border border-2 border-gray-300">
-            <img class="h-100 w-100 rounded-circle" src="../../../../assets/media/avatars/girl.jpg" alt="" />
+            <img class="h-100 w-100 rounded-circle" [src]="userLogged?.avatar" alt="" />
         </div>
         <div ngbDropdownMenu aria-labelledby="dropdownConfig" style="z-index: 10000">
             <div class="card">
@@ -9,29 +9,41 @@
                     <div class="border-bottom pb-3 mb-3">
                         <div class="d-flex align-items-center">
                             <div class="me-3">
-                                <app-user-avatar [isActive]="" [size]="40"></app-user-avatar>
+                                <app-user-avatar [user]="userLogged" [size]="40"></app-user-avatar>
                             </div>
                             <div class="d-flex flex-column">
-                                <span class="fw-bold fs-4">Nguyễn Duy Phúc</span>
+                                <span class="fw-bold fs-4">{{ userLogged?.name }}</span>
                                 <!-- <span class="text-primary fs-8">Trang cá nhân</span> -->
                             </div>
                         </div>
                     </div>
                     <div class="mb-3 pb-3 border-bottom">
                         <div class="d-flex flex-column">
-                            <a routerLink="/profile" class="bg-hover-gray-200 text-gray-900 p-3 rounded-2">
+                            <a
+                                routerLink="/profile/{{ userLogged?.id }}"
+                                (click)="$event.stopPropagation(); userDropMenu.close()"
+                                class="bg-hover-gray-200 text-gray-900 p-3 rounded-2"
+                            >
                                 <div class="d-flex flex-row align-items-center">
                                     <i class="ki-outline ki-user fs-5 me-2"></i>
                                     <span>Trang cá nhân</span>
                                 </div>
                             </a>
-                            <a routerLink="/profile" class="bg-hover-gray-200 text-gray-900 p-3 rounded-2">
+                            <a
+                                routerLink="/profile"
+                                class="bg-hover-gray-200 text-gray-900 p-3 rounded-2"
+                                (click)="$event.stopPropagation(); userDropMenu.close()"
+                            >
                                 <div class="d-flex flex-row align-items-center">
                                     <i class="ki-outline ki-lock fs-5 me-2"></i>
                                     <span>Đổi mật khẩu</span>
                                 </div>
                             </a>
-                            <a routerLink="/profile" class="bg-hover-gray-200 text-gray-900 p-3 rounded-2">
+                            <a
+                                routerLink="/profile"
+                                class="bg-hover-gray-200 text-gray-900 p-3 rounded-2"
+                                (click)="$event.stopPropagation(); userDropMenu.close()"
+                            >
                                 <div class="d-flex flex-row align-items-center">
                                     <i class="ki-outline ki-night-day fs-5 me-2"></i>
                                     <span>Đổi màu giao diện</span>
