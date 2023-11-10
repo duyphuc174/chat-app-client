@@ -5,9 +5,21 @@ import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileCardComponent } from './profile-card/profile-card.component';
 import { PartialModule } from 'src/app/modules/partials/partial.module';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { ProfileUpdateModalComponent } from './profile-update-modal/profile-update-modal.component';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-    declarations: [ProfileComponent, ProfileCardComponent],
-    imports: [CommonModule, ProfileRoutingModule, PartialModule, HttpClientModule],
+    declarations: [ProfileComponent, ProfileCardComponent, ProfileUpdateModalComponent],
+    imports: [
+        CommonModule,
+        ProfileRoutingModule,
+        PartialModule,
+        HttpClientModule,
+        NgbTooltipModule,
+        BsDatepickerModule,
+        ReactiveFormsModule,
+    ],
 })
 export class ProfileModule {}

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable, catchError, map, of } from 'rxjs';
 import { UserModel } from 'src/app/modules/auth/_model/auth.model';
 import { ProfileHttpService } from './profile-http.service';
+import { IUserUpdate } from '../_models/profile.model';
+import { FriendModel } from '../../friends/_models/friend.model';
 
 @Injectable({
     providedIn: 'root',
@@ -24,12 +26,16 @@ export class ProfileService {
         );
     }
 
-    getUser(id: number): Observable<UserModel> {
+    getUser(id: number): Observable<FriendModel> {
         return this.profileHttpService.getUser(id).pipe(
-            map((user) => {
+            map((res) => {
                 const u = new UserModel();
-                u.setData(user.data);
-                return u;
+                u.setData(res.user);
+                const friend: FriendModel = {
+                    user: u,
+                    friendStatus: res.friend_status,
+                };
+                return friend;
             }),
             catchError(() => {
                 return of();
@@ -39,6 +45,19 @@ export class ProfileService {
 
     updateAvatar(body): Observable<any> {
         return this.profileHttpService.updateAvatar(body).pipe(
+            map((res) => {
+                const user = new UserModel();
+                user.setData(res.data);
+                return user;
+            }),
+            catchError(() => {
+                return of();
+            }),
+        );
+    }
+
+    updateProfile(body: IUserUpdate): Observable<any> {
+        return this.profileHttpService.updateProfile(body).pipe(
             map((res) => {
                 const user = new UserModel();
                 user.setData(res.data);

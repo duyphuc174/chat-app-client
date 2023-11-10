@@ -1,0 +1,36 @@
+<app-modal-header [title]="'Chỉnh sửa thông tin cá nhân'"></app-modal-header>
+<form class="card" [formGroup]="form">
+    <div class="card-body">
+        <div class="form-group mb-5">
+            <label for="" class="form-label required">Tên của bạn</label>
+            <input placeholder="Nhập tên của bạn..." class="form-control" formControlName="fullName" type="text" />
+        </div>
+
+        <div class="form-group mb-5">
+            <label for="" class="form-label required">Sinh nhật</label>
+            <input
+                formControlName="dateOfBirth"
+                class="form-control"
+                placement="bottom"
+                placeholder="Ấn để chọn ngày"
+                [bsConfig]="{ startView: 'year' }"
+                bsDatepicker
+                type="text"
+            />
+        </div>
+
+        <div class="form-group mb-5">
+            <label for="" class="form-label">Mô tả về bản thân</label>
+            <textarea
+                formControlName="description"
+                placeholder="Thêm mô tả về bản thân..."
+                class="form-control"
+                name=""
+                id=""
+                cols="30"
+                rows="3"
+            ></textarea>
+        </div>
+    </div>
+</form>
+<app-modal-footer [buttonName]="'Cập nhật'" (submitModal)="submit()"></app-modal-footer>

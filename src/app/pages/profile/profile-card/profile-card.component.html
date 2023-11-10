@@ -16,13 +16,15 @@
                         [size]="150"
                         [canClick]="false"
                         [borderSize]="5"
+                        [canClick]="false"
                     ></app-user-avatar>
                     <div class="position-absolute bottom-0 end-0" *ngIf="userLogged.id === profileId">
                         <label
-                            class="cursor-pointer bagde rounded-circle p-2 bg-gray-300 bg-hover-gray-400 d-flex align-items-center justify-content-center border"
+                            class="cursor-pointer bagde rounded-circle p-2 bg-gray-300 bg-hover-gray-400 d-flex align-items-center justify-content-center border me-1 mb-1"
                             for="avatar"
+                            [ngbTooltip]="'Thay avatar'"
                         >
-                            <i class="ki-solid ki-pencil fs-4 text-primary"></i>
+                            <i class="ki-solid ki-instagram fs-4 text-primary"></i>
                             <input
                                 hidden
                                 (change)="changeAvatar($event)"
@@ -40,8 +42,29 @@
                         <span class="ms-3 fs-1 fw-bold">{{ user.name }}</span>
                     </div>
                     <div class="d-flex flex-row">
-                        <button class="btn btn-primary me-5">Thêm bạn bè</button>
-                        <button class="btn btn-secondary">Nhắn tin</button>
+                        <ng-container *ngIf="profileId !== userLogged.id; else ownerProfile">
+                            <button class="btn btn-primary me-5" (click)="submitFriend()">
+                                <i class="ki-outline ki-user"></i>
+                                <ng-container *ngIf="status === friendStatus.NO_RELATIVE"> Thêm bạn bè </ng-container>
+                                <ng-container *ngIf="status === friendStatus.WAITING_FOR_ACCEPT">
+                                    Hủy lời mời
+                                </ng-container>
+                                <ng-container *ngIf="status === friendStatus.GET_AN_INVITATION">
+                                    Chấp nhận lời mời
+                                </ng-container>
+                                <ng-container *ngIf="status === friendStatus.ACCEPTED"> Xóa bạn bè </ng-container>
+                            </button>
+                            <button class="btn btn-secondary">
+                                <i class="ki-outline ki-messages"></i>
+                                Nhắn tin
+                            </button>
+                        </ng-container>
+                        <ng-template #ownerProfile>
+                            <button class="btn btn-primary cursor-pointer" (click)="openModalUpdateUser()">
+                                <i class="ki-outline ki-pencil"></i>
+                                Chỉnh sửa trang cá nhân
+                            </button>
+                        </ng-template>
                     </div>
                 </div>
             </div>

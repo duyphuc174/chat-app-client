@@ -1,37 +1,68 @@
-<div ngbDropdown #notificationDropMenu="ngbDropdown">
+<div ngbDropdown #notificationDropMenu="ngbDropdown" *ngIf="notifications$ | async as notifications">
     <a
-        class="cursor-pointer bg-hover-info rounded p-5 d-flex align-items-center justify-content-center"
+        class="cursor-pointer bg-hover-info rounded p-5 d-flex align-items-center justify-content-center position-relative"
         ngbDropdownToggle
         [attr.aria-expanded]="menuIsOpen ? true : false"
         aria-haspopup="true"
         [ngClass]="{ 'bg-info': menuIsOpen }"
     >
         <i class="ki-outline ki-notification fs-1 text-gray-200"></i>
+        <div class="position-absolute top-0 end-0 mt-1 me-1" *ngIf="notificationNotReadTotal > 0">
+            <span class="badge p-2 rounded rounded-2 bg-danger text-light">{{ notificationNotReadTotal }}</span>
+        </div>
     </a>
     <div ngbDropdownMenu aria-labelledby="dropdownConfig" style="z-index: 10000">
         <div class="card">
-            <div class="card-body p-3 w-400px">
-                <ng-container *ngFor="let i of [1, 2, 3, 4, 5]" [ngTemplateOutlet]="notiItem"></ng-container>
+            <div class="card-body p-3 w-400px overflow-scroll" style="max-height: 60vh">
+                <div class="mb-3 px-3 py-0">
+                    <span class="fw-bold fs-2">Thông báo</span>
+                </div>
+                <ng-container *ngIf="!(isLoading$ | async); else loadingTpl">
+                    <ng-container *ngIf="notifications.length > 0; else noHasNoti">
+                        <ng-container *ngFor="let noti of notifications; let i = index">
+                            <ng-container
+                                [ngTemplateOutlet]="notiItem"
+                                [ngTemplateOutletContext]="{ notification: noti }"
+                            >
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+                    <ng-template #noHasNoti>
+                        <div class="d-flex align-items-center justify-content-center mt-10">
+                            <span class="fw-bold">Hiện tại không có thông báo dành cho bạn!</span>
+                        </div>
+                    </ng-template>
+                </ng-container>
+                <ng-template #loadingTpl>
+                    <app-loading [isLoading$]="isLoading$"></app-loading>
+                </ng-template>
             </div>
         </div>
     </div>
+    <ng-template let-notification="notification" #notiItem>
+        <a
+            class="cursor-pointer"
+            routerLink="profile/{{ notification.sender.id }}"
+            (click)="$event.stopPropagation(); notificationDropMenu.close()"
+        >
+            <div class="d-flex flex-row bg-hover-gray-200 p-3 rounded">
+                <div class="me-3">
+                    <app-user-avatar [size]="50" [user]="notification.sender"></app-user-avatar>
+                </div>
+                <div class="d-flex flex-column me-3">
+                    <span class="text-dark">
+                        <a class="text-primary fw-bold">{{ notification.sender.name }} </a>{{ notification.content }}
+                    </span>
+                    <span class="mt-2 text-gray-500 fs-7">{{ transformDate(notification.createAt) }}</span>
+                </div>
+                <div class="d-flex align-items-center justify-content-center ms-auto" style="width: 10px">
+                    <div
+                        *ngIf="!notification.isRead"
+                        class="bg-primary border border-light rounded-circle"
+                        style="padding: 5px"
+                    ></div>
+                </div>
+            </div>
+        </a>
+    </ng-template>
 </div>
-
-<ng-template let-user="user" #notiItem>
-    <a class="cursor-pointer">
-        <div class="d-flex flex-row bg-hover-gray-200 p-3 rounded">
-            <div class="me-3">
-                <app-user-avatar [size]="50"></app-user-avatar>
-            </div>
-            <div class="d-flex flex-column me-3">
-                <span class="text-dark">
-                    <a class="text-primary fw-bold">Nguyễn Duy Phúc</a> đã gửi cho bạn lời mời kết bạn</span
-                >
-                <span class="mt-2 text-gray-500 fs-7">2 phút trước</span>
-            </div>
-            <div class="d-flex align-items-center justify-content-center">
-                <div class="bg-primary border border-light rounded-circle" style="padding: 5px"></div>
-            </div>
-        </div>
-    </a>
-</ng-template>

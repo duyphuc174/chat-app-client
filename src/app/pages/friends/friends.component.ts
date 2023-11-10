@@ -12,8 +12,6 @@ export class FriendsComponent implements OnInit {
     ngOnInit(): void {}
 
     click() {
-        console.log(111);
-
         this.auth.getUserByToken();
     }
 }

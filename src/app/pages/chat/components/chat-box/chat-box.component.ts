@@ -47,8 +47,8 @@ export class ChatBoxComponent implements OnInit {
         this.activatedRoute.params.subscribe((param) => {
             this.userId = +param.id;
             if (this.userId) {
-                this.profileService.getUser(this.userId).subscribe((user) => {
-                    this.receiverSubject.next(user);
+                this.profileService.getUser(this.userId).subscribe((res) => {
+                    this.receiverSubject.next(res.user);
                 });
             }
         });

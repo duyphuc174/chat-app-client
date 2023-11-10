@@ -12,7 +12,6 @@ export class HttpInterceptorInterceptor implements HttpInterceptor {
             return next.handle(request);
         }
         const token = this.cookie.get('user_token');
-        console.log(token);
 
         if (token) {
             request = request.clone({

@@ -12,6 +12,8 @@ import { FriendListComponent } from './friend-list/friend-list.component';
 import { ChangeModeModalComponent } from './change-mode-modal/change-mode-modal.component';
 import { LoadingComponent } from './loading/loading.component';
 import { NotificationComponent } from './notification/notification.component';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
     declarations: [
@@ -26,7 +28,7 @@ import { NotificationComponent } from './notification/notification.component';
         LoadingComponent,
         NotificationComponent,
     ],
-    imports: [CommonModule, NgbTooltipModule, NgSelectModule, NgbDropdownModule],
+    imports: [CommonModule, NgbTooltipModule, NgSelectModule, NgbDropdownModule, HttpClientModule, RouterModule],
     exports: [
         UserAvatarComponent,
         SearchInputComponent,

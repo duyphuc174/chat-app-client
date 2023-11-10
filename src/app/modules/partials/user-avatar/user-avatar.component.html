@@ -1,7 +1,6 @@
 <a
-    href="#"
     class="cursor-pointer d-inline-flex align-items-center justify-content-center"
-    [ngbTooltip]="user?.name && canClick ? user.name : 'Nguyễn Duy Phúc'"
+    [ngbTooltip]="user?.name && canClick ? user.name : null"
 >
     <div
         class="rounded-circle border border-{{ borderSize }}"
