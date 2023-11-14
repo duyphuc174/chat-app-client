@@ -1,27 +1,45 @@
 <div class="d-flex flex-row h-100">
     <div class="d-flex flex-column w-100" style="height: 100vh">
-        <div class="border-bottom d-flex justify-content-between align-items-center" style="height: 65px">
-            <div class="ms-3 d-flex align-items-center flex-row" *ngIf="receiver$ | async as receiver">
-                <app-user-avatar [user]="receiver" [size]="40"></app-user-avatar>
-                <span class="ms-2 fs-6" style="font-weight: 500">{{ receiver.name }}</span>
-            </div>
-            <div class="chat-box-info me-3" (click)="showMenu()">
-                <i class="ki-solid ki-information-2 fs-2 text-info chat-box-info-icon"></i>
+        <div class="border-bottom flex-shrink-1 d-flex justify-content-between align-items-center p-3">
+            <ng-container *ngIf="!(isLoading$ | async) && conversation$ | async as conversation">
+                <div class="ms-3 d-flex align-items-center flex-row">
+                    <app-chat-image [size]="40" [image]="conversation.image"></app-chat-image>
+                    <span class="ms-2 fs-6" style="font-weight: 500">{{ conversation.name }}</span>
+                </div>
+                <div class="chat-box-info me-3" (click)="showMenu()">
+                    <i class="ki-solid ki-information-2 fs-2 text-info chat-box-info-icon"></i>
+                </div>
+            </ng-container>
+            <div class="w-100 h-100 d-flex align-items-center justify-content-center" *ngIf="isLoading$ | async">
+                <app-loading [isLoading$]="isLoading$"></app-loading>
             </div>
         </div>
         <div
             class="flex-grow-1 p-3 d-flex flex-column flex-column-reverse"
             style="overflow-y: scroll; background-color: var(--bs-gray-100)"
+            infinite-scroll
+            [scrollWindow]="false"
+            (scrolled)="loadMessages(true)"
         >
-            <ng-container *ngIf="!(receiver$ | async)">
-                <ng-container *ngFor="let dt of data">
-                    <app-chat-box-message [data]="dt" class="d-content"></app-chat-box-message>
+            <ng-container *ngIf="!(isLoading$ | async)">
+                <ng-container *ngFor="let item of messageContainers">
+                    <app-chat-box-message [messageContainer]="item" class="d-content"></app-chat-box-message>
                 </ng-container>
             </ng-container>
+            <div
+                class="d-flex align-items-center flex-column justify-content-center mb-auto"
+                *ngIf="!(isLoading$ | async) && conversation$ | async as conversation"
+            >
+                <app-chat-image class="pt-3" [image]="conversation.image" [size]="60"></app-chat-image>
+                <span class="fs-4 pb-5 pt-1 fw-bold">{{ conversation.name }}</span>
+                <a *ngIf="canViewMore" class="fs-7 pb-5 pt-1 text-primary cursor-pointer" (click)="loadMessages(true)"
+                    >Xem thêm</a
+                >
+            </div>
         </div>
 
-        <div class="border-top w-100 mt-auto">
-            <div class="p-2 w-100 d-flex flex-row">
+        <form class="border-top w-100 mt-auto" [formGroup]="form">
+            <div class="p-5 w-100 d-flex flex-row">
                 <div class="me-1 d-flex align-items-center justify-content-center">
                     <div
                         class="rounded-circle d-flex align-items-center justify-content-center send-link"
@@ -33,11 +51,15 @@
                 <div class="flex-grow-1">
                     <div class="position-relative comment d-flex align-items-center justify-content-center">
                         <textarea
+                            #textarea
+                            (keydown.enter)="sendMessage()"
+                            formControlName="content"
                             placeholder="Aa"
                             type="text"
                             rows="1"
                             class="w-100 rounded-pill comment-input"
                             style="resize: none"
+                            (input)="adjustTextareaHeight(_textarea)"
                         ></textarea>
                         <div class="position-absolute top-50 end-0 translate-middle-y me-2">
                             <app-reaction></app-reaction>
@@ -46,16 +68,20 @@
                 </div>
                 <div class="ms-1 d-flex align-items-center justify-content-center">
                     <div
+                        *ngIf="!(isLoadSendMessage$ | async)"
                         class="rounded-circle d-flex align-items-center justify-content-center send-link"
                         [ngbTooltip]="'Gửi'"
+                        (click)="sendMessage()"
                     >
                         <i class="ki-solid ki-send text-primary fs-4"></i>
                     </div>
+                    <app-loading [isLoading$]="isLoadSendMessage$"></app-loading>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
     <div *ngIf="isShowMenu" class="border-start" style="width: 500px">
-        <app-chat-box-menu></app-chat-box-menu>
+        <app-chat-box-menu [conversation]="conversation$ | async" [isLoading$]="isLoading$"></app-chat-box-menu>
     </div>
 </div>
+<!-- div -->

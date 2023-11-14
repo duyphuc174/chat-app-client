@@ -10,6 +10,7 @@ export class ModalFooterComponent {
     @HostBinding('class') class = 'd-content';
     @Input() buttonName: string;
     @Output() submitModal: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Input() disabled: any;
 
     constructor(public bsModalRef: BsModalRef) {}
 

@@ -10,8 +10,4 @@ export class FriendsComponent implements OnInit {
     constructor(private auth: AuthService) {}
 
     ngOnInit(): void {}
-
-    click() {
-        this.auth.getUserByToken();
-    }
 }

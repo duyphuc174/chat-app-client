@@ -2,9 +2,12 @@
     <div class="mb-10">
         <app-search-input></app-search-input>
     </div>
-    <ng-container *ngFor="let i of [1, 2, 3, 4, 5]">
-        <div class="mb-5">
-            <app-friends-item [firstButtonTitle]="'Thêm bạn bè'" [secondButtonTitle]="'Nhắn tin'"></app-friends-item>
-        </div>
+    <ng-container *ngIf="friends$ | async as friends">
+        <ng-container *ngFor="let friend of friends">
+            <div class="mb-5">
+                <app-friends-item [friend]="friend" [secondButtonTitle]="'Nhắn tin'"></app-friends-item>
+            </div>
+        </ng-container>
     </ng-container>
+    <app-loading [isLoading$]="isLoading$"></app-loading>
 </div>

@@ -4,9 +4,12 @@
             <span class="fw-bold fs-2">Dánh sách lời mời</span>
         </div>
     </div>
-    <ng-container *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9]">
-        <div class="mb-5">
-            <app-friends-item [firstButtonTitle]="'Đồng ý'" [secondButtonTitle]="'Xóa'"></app-friends-item>
-        </div>
+    <ng-container *ngIf="friendsRequest">
+        <ng-container *ngFor="let friend of friendsRequest">
+            <div class="mb-5">
+                <app-friends-item [friend]="friend" [secondButtonTitle]="'Xóa'"></app-friends-item>
+            </div>
+        </ng-container>
     </ng-container>
+    <app-loading [isLoading$]="isLoading$"></app-loading>
 </div>

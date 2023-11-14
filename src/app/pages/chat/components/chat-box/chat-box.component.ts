@@ -1,127 +1,232 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { UserModel } from 'src/app/modules/auth/_model/auth.model';
 import { ProfileService } from 'src/app/pages/profile/_services/profile.service';
+import { ChatService } from '../../_services/chat.service';
+import {
+    ConversationModel,
+    IBodyPostMessage,
+    MessageContainer,
+    MessageContainerItem,
+    MessageModel,
+    MessageType,
+} from '../../_models/chat.model';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { PusherService } from 'src/app/modules/partials/_services/pusher.service';
+import { AuthService } from 'src/app/modules/auth';
 
 @Component({
     selector: 'app-chat-box',
     templateUrl: './chat-box.component.html',
     styleUrls: ['./chat-box.component.scss'],
 })
-export class ChatBoxComponent implements OnInit {
+export class ChatBoxComponent implements OnInit, OnChanges, OnDestroy {
+    @ViewChild('textarea', { static: false }) _textarea: ElementRef;
     userId: number;
-    receiverSubject: BehaviorSubject<UserModel> = new BehaviorSubject<UserModel>(null);
-    receiver$: Observable<UserModel> = this.receiverSubject.asObservable();
-
-    user1: UserModel;
-    user2: UserModel;
-    data = [];
-    messages = [
-        {
-            isOwner: false,
-            messages: ['Xin chào', 'abbsbs?', 'hhhđ hshsh fyys gsdk hhss?'],
-        },
-        {
-            isOwner: true,
-            messages: [
-                'isuuus hd hhhshs ggdgd',
-                'jsy hsh gdbb jsycy',
-                'isuuuo jjjshd tycys bsvgx',
-                'Hudhh gsgst gcnsd gdhsjsf sjd',
-            ],
-        },
-        {
-            isOwner: false,
-            messages: ['jdjjdjd ajjsh dhhsd?', 'Njdjd...', 'Njud i  dfdf fdf dsfg'],
-        },
-    ];
+    ownerId: number;
+    conversationId: number;
+    form: UntypedFormGroup;
 
     isShowMenu: boolean = true;
+    conversationSubject: BehaviorSubject<ConversationModel> = new BehaviorSubject<ConversationModel>(undefined);
+    conversation$: Observable<ConversationModel> = this.conversationSubject.asObservable();
+
+    isLoadSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    isLoading$: Observable<boolean> = this.isLoadSubject.asObservable();
+
+    isLoadSendMessageSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    isLoadSendMessage$: Observable<boolean> = this.isLoadSubject.asObservable();
+
+    messageList: MessageModel[];
+    messageContainers: MessageContainer[] = [];
+    messageContainer: MessageContainer = new MessageContainer();
+
+    currentUserMessage: UserModel;
+
+    pusherChannelName: string = 'messages';
+    pusherChannelEvents: string = '';
+
+    routeSubscription: Subscription;
+
+    currentPage: number;
+
+    canViewMore: boolean = true;
 
     constructor(
         private router: Router,
         private activatedRoute: ActivatedRoute,
         private profileService: ProfileService,
+        private chatService: ChatService,
+        private fb: UntypedFormBuilder,
+        private pusherService: PusherService,
+        private auth: AuthService,
     ) {
-        this.activatedRoute.params.subscribe((param) => {
+        this.routeSubscription = this.activatedRoute.params.subscribe((param) => {
+            this.ownerId = this.auth.currentUserValue.id;
             this.userId = +param.id;
-            if (this.userId) {
-                this.profileService.getUser(this.userId).subscribe((res) => {
-                    this.receiverSubject.next(res.user);
-                });
-            }
+            this.conversationId = +param.id;
+            this.loadPusher();
+            this.loadData();
         });
     }
     ngOnInit(): void {
-        this.messages.reverse();
+        this.initForm();
+    }
 
-        this.user1 = new UserModel();
-        this.user1.setData({
-            id: 1,
-            fullName: 'Nguyễn Duy Phúc',
-            avatar: '../../../../../../assets/media/avatars/avt.jpg',
+    initForm() {
+        this.form = this.fb.group({
+            content: [''],
         });
+    }
 
-        this.user2 = new UserModel();
-        this.user2.setData({
-            id: 2,
-            fullName: 'Một ai đó ?',
-            avatar: '../../../../../../assets/media/avatars/girl.jpg',
+    loadData(reload: boolean = false) {
+        this.canViewMore = true;
+        this.messageContainers = [];
+        this.currentUserMessage = undefined;
+        this.isLoadSubject.next(true);
+        this.chatService.getConversationById(this.conversationId).subscribe((res) => {
+            if (res) {
+                this.conversationSubject.next(res);
+                // this.router.navigate([`chat/messages/${res[0].id}`]);
+            }
+            this.isLoadSubject.next(false);
         });
+        this.loadMessages();
+    }
 
-        this.data = [
-            {
-                user: this.user1,
-                messages: [
-                    {
-                        id: 1,
-                        content: 'abcb',
-                    },
-                    {
-                        id: 1,
-                        content: 'abcb hhsj kks hdhg ôdid',
-                    },
-                    {
-                        id: 1,
-                        content: 'abcb hsh hjjs',
-                    },
-                ],
-            },
-            {
-                user: this.user2,
-                messages: [
-                    {
-                        id: 1,
-                        content: 'ab đcdb  fff',
-                    },
-                    {
-                        id: 1,
-                        content: 'abc b',
-                    },
-                    {
-                        id: 1,
-                        content: 'abcb con sks fhh súii',
-                    },
-                ],
-            },
-            {
-                user: this.user1,
-                messages: [
-                    {
-                        id: 1,
-                        content: 'abcb',
-                    },
-                    {
-                        id: 1,
-                        content: 'abcb',
-                    },
-                ],
-            },
-        ];
+    loadMessages(reload: boolean = false) {
+        if (!this.canViewMore) {
+            return;
+        }
+        this.currentPage = reload ? this.chatService.currentPage + 1 : 1;
+
+        this.chatService.getMessages(this.conversationId, { page: this.currentPage }).subscribe((res) => {
+            this.messageList = res;
+            if (res.length < 20) {
+                this.canViewMore = false;
+            }
+
+            if (reload) {
+                this.messageList.forEach((mess) => {
+                    this.pushNewMessage(mess);
+                });
+            } else {
+                this.converMessagesToContainer();
+            }
+        });
+    }
+
+    converMessagesToContainer() {
+        if (!this.messageList.length) {
+            return;
+        }
+        if (!this.currentUserMessage) {
+            this.currentUserMessage = this.messageList[0].userSent;
+        }
+
+        this.messageList.forEach((message) => {
+            const messContainerItem = new MessageContainerItem();
+            messContainerItem.setData(message);
+
+            if (this.currentUserMessage?.id !== message.userSent.id) {
+                this.messageContainer.user = this.currentUserMessage;
+                this.currentUserMessage = message.userSent;
+                this.messageContainers.push(this.messageContainer);
+                this.messageContainer = new MessageContainer();
+            }
+            this.messageContainer.messages.unshift(messContainerItem);
+        });
+        this.messageContainer.user = this.currentUserMessage;
+        this.messageContainers.push(this.messageContainer);
+    }
+
+    sendMessage() {
+        const content = this.form.value.content;
+        if (!content || this.isLoadSendMessageSubject.value) {
+            return;
+        }
+
+        this.isLoadSendMessageSubject.next(true);
+
+        const body: IBodyPostMessage = {
+            conversationId: this.conversationId,
+            content: content,
+            type: MessageType.TEXT,
+        };
+
+        this.chatService.createMessage(body).subscribe((res) => {
+            if (!res.status) {
+                this.form.reset();
+            }
+            this.isLoadSendMessageSubject.next(false);
+        });
+    }
+
+    loadPusher() {
+        this.pusherService.setChannel(this.pusherChannelName);
+        this.pusherChannelEvents = `messages-sent-${this.conversationId}`;
+        this.pusherService.bind(this.pusherChannelEvents, (res) => {
+            const mess = new MessageModel();
+            mess.setData(res.data);
+            this.insertNewMessage(mess);
+        });
+    }
+
+    insertNewMessage(message: MessageModel) {
+        const messContainerItem = new MessageContainerItem();
+        messContainerItem.setData(message);
+
+        if (this.messageContainers.length > 0) {
+            if (this.messageContainers[0].user.id === message.userSent.id) {
+                this.messageContainers[0].messages.push(messContainerItem);
+            } else {
+                const messContainer = new MessageContainer();
+                messContainer.user = message.userSent;
+                messContainer.messages.push(messContainerItem);
+                this.messageContainers.unshift(messContainer);
+            }
+        } else {
+            const messContainer = new MessageContainer();
+            messContainer.user = message.userSent;
+            messContainer.messages.push(messContainerItem);
+            this.messageContainers.unshift(messContainer);
+        }
+    }
+
+    pushNewMessage(message: MessageModel) {
+        const messContainerItem = new MessageContainerItem();
+        messContainerItem.setData(message);
+        if (this.messageContainers.length > 0) {
+            if (this.messageContainers[this.messageContainers.length - 1].user.id === message.userSent.id) {
+                this.messageContainers[this.messageContainers.length - 1].messages.unshift(messContainerItem);
+            } else {
+                const messContainer = new MessageContainer();
+                messContainer.user = message.userSent;
+                messContainer.messages.unshift(messContainerItem);
+                this.messageContainers.push(messContainer);
+            }
+        } else {
+            const messContainer = new MessageContainer();
+            messContainer.user = message.userSent;
+            messContainer.messages.unshift(messContainerItem);
+            this.messageContainers.push(messContainer);
+        }
     }
 
     showMenu() {
         this.isShowMenu = !this.isShowMenu;
+    }
+
+    adjustTextareaHeight(textarea: ElementRef) {
+        const element = textarea.nativeElement;
+        element.style.height = 'auto';
+        element.style.height = element.scrollHeight + 2 + 'px';
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {}
+
+    ngOnDestroy(): void {
+        this.routeSubscription.unsubscribe();
     }
 }

@@ -9,9 +9,10 @@ import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProfileUpdateModalComponent } from './profile-update-modal/profile-update-modal.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ChangePasswordModalComponent } from './change-password-modal/change-password-modal.component';
 
 @NgModule({
-    declarations: [ProfileComponent, ProfileCardComponent, ProfileUpdateModalComponent],
+    declarations: [ProfileComponent, ProfileCardComponent, ProfileUpdateModalComponent, ChangePasswordModalComponent],
     imports: [
         CommonModule,
         ProfileRoutingModule,

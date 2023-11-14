@@ -58,7 +58,7 @@ export class NotificationComponent implements OnInit {
         this.pusherService.bind(this.pusherChannelEvents, (res) => {
             if (res) {
                 const newNotification = new NotificationModel();
-                newNotification.setData(res.message);
+                newNotification.setData(res.data);
                 this.notificationNotReadTotal++;
                 this.notificationsSubject.next([newNotification, ...this.notificationsSubject.value]);
             }

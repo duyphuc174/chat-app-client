@@ -23,9 +23,12 @@
         <app-search-input></app-search-input>
     </div>
     <div class="d-flex flex-column px-2 flex-shrink-1" style="overflow-y: scroll">
-        <ng-container *ngFor="let i of [1]">
-            <app-chat-list-item [id]="i"></app-chat-list-item>
+        <ng-container *ngIf="conversation$ | async as conversations">
+            <ng-container *ngFor="let conversation of conversations">
+                <app-chat-list-item [conversation]="conversation" [ownerId]="ownerId"></app-chat-list-item>
+            </ng-container>
         </ng-container>
+        <app-loading [isLoading$]="isLoading$"></app-loading>
     </div>
     <div class="p-6 mt-auto border-top border-2 fw-bold text-center fs-5 text-info">Danh sách chat</div>
 </div>

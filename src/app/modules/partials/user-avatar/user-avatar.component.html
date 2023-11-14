@@ -1,4 +1,5 @@
 <a
+    routerLink="/profile/{{ user?.id }}"
     class="cursor-pointer d-inline-flex align-items-center justify-content-center"
     [ngbTooltip]="user?.name && canClick ? user.name : null"
 >

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/modules/auth';
 import { UserModel } from 'src/app/modules/auth/_model/auth.model';
 import { NotificationComponent } from 'src/app/modules/partials/notification/notification.component';
+import { ChangePasswordModalComponent } from 'src/app/pages/profile/change-password-modal/change-password-modal.component';
 
 @Component({
     selector: 'app-user-inner',
@@ -21,6 +22,11 @@ export class UserInnerComponent implements OnInit {
 
     ngOnInit(): void {
         this.user$ = this.authService.currentUserSubject.asObservable();
+        // this.showChangePasswordModal();
+    }
+
+    showChangePasswordModal() {
+        this.bsModalService.show(ChangePasswordModalComponent);
     }
 
     logout() {

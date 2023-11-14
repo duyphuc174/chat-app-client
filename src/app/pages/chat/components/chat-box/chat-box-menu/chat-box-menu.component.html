@@ -1,157 +1,158 @@
 <div class="px-2 py-3" style="height: 100vh">
-  <div class="d-flex flex-column h-100">
-    <div class="text-center mb-3">
-      <div class="d-inline-flex flex-column">
-        <app-user-avatar [size]="80"></app-user-avatar>
-        <span class="mt-2 fs-6 fw-500">Nguyễn Duy Phúc</span>
-      </div>
-    </div>
-    <div class="d-flex flex-column h-100" style="overflow-y: scroll">
-      <div class="mb-3">
-        <app-search-input></app-search-input>
-      </div>
-      <div class="">
-        <div class="d-flex flex-row justify-content-between menu-item">
-          <span class="">Tắt thông báo về đoạn chat</span>
-          <div class="form-check form-switch cursor-pointer">
-            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked />
-          </div>
+    <div class="d-flex flex-column h-100">
+        <div class="text-center mb-3">
+            <div class="d-inline-flex flex-column" *ngIf="conversation">
+                <app-chat-image [image]="conversation.image" [size]="80"></app-chat-image>
+                <span class="mt-2 fs-6 fw-500">{{ conversation.name }}</span>
+            </div>
+            <app-loading [isLoading$]="isLoading$"></app-loading>
         </div>
-      </div>
-      <div class="">
-        <div class="d-flex flex-column">
-          <div
-            class="menu-item menu-item-click d-flex flex-row align-items-center justify-content-between"
-            (click)="showCustomization()"
-          >
-            <span>Tùy chỉnh đoạn chat</span>
-            <i class="ki-solid me-2" [ngClass]="isShowCustomization ? 'ki-up' : 'ki-down'"></i>
-          </div>
-          <div *ngIf="isShowCustomization" class="">
-            <div class="menu-item menu-item-click">
-              <div class="d-flex flex-row align-items-center">
-                <i class="ki-outline ki-pin fs-5 me-2 fw-500"></i>
-                <span>Tin nhắn đã ghim</span>
-              </div>
+        <div class="d-flex flex-column h-100" style="overflow-y: scroll">
+            <div class="mb-3">
+                <app-search-input></app-search-input>
             </div>
-            <div class="menu-item menu-item-click">
-              <div class="d-flex flex-row align-items-center">
-                <i class="ki-outline ki-pencil fs-5 me-2 fw-500"></i>
-                <span>Đổi tên đoạn chat</span>
-              </div>
-            </div>
-            <div class="menu-item menu-item-click">
-              <div class="d-flex flex-row align-items-center">
-                <i class="ki-outline ki-instagram fs-5 me-2 fw-500"></i>
-                <span>Thay đổi ảnh</span>
-              </div>
-            </div>
-            <div class="menu-item menu-item-click">
-              <div class="d-flex flex-row align-items-center">
-                <i class="ki-outline ki-text fs-5 me-2 fw-500"></i>
-                <span>Chỉnh sửa biệt danh</span>
-              </div>
-            </div>
-            <div class="menu-item menu-item-click">
-              <div class="d-flex flex-row align-items-center">
-                <i class="ki-outline ki-like fs-5 me-2 fw-500"></i>
-                <span>Thay đổi biểu tượng cảm xúc</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="">
-        <div class="d-flex flex-column">
-          <div
-            class="menu-item menu-item-click d-flex flex-row align-items-center justify-content-between"
-            (click)="showMemberList()"
-          >
-            <span>Thành viên</span>
-            <i class="ki-solid me-2" [ngClass]="isShowMemberList ? 'ki-up' : 'ki-down'"></i>
-          </div>
-          <div *ngIf="isShowMemberList" class="">
-            <ng-container *ngFor="let i of [1, 2, 3]">
-              <div class="menu-item">
-                <div class="d-flex flex-row align-items-center">
-                  <div class="d-flex flex-row">
-                    <app-user-avatar [size]="45"></app-user-avatar>
-                    <div class="d-flex flex-column align-items-start justify-content-center ms-1">
-                      <span class="fw-500">Nguyễn Duy Phúc</span>
-                      <span class="fw-normal" style="font-size: 12px">Do justina thêm</span>
+            <!-- <div class="">
+                <div class="d-flex flex-row justify-content-between menu-item">
+                    <span class="">Tắt thông báo về đoạn chat</span>
+                    <div class="form-check form-switch cursor-pointer">
+                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked />
                     </div>
-                  </div>
-                  <div class="ms-auto me-1">
-                    <i class="ki-solid ki-dots-horizontal fw-bold fs-4"></i>
-                  </div>
                 </div>
-              </div>
-            </ng-container>
-          </div>
-        </div>
-      </div>
-      <div class="">
-        <div class="d-flex flex-column">
-          <div
-            class="menu-item menu-item-click d-flex flex-row align-items-center justify-content-between"
-            (click)="showPrivacy()"
-          >
-            <span>Ảnh, file và liên kết</span>
-            <i class="ki-solid me-2" [ngClass]="isShowPrivacy ? 'ki-up' : 'ki-down'"></i>
-          </div>
-          <div *ngIf="isShowPrivacy" class="">
-            <div class="menu-item menu-item-click">
-              <div class="d-flex flex-row align-items-center">
-                <i class="ki-outline ki-instagram fs-5 me-2 fw-500"></i>
-                <span>Ảnh</span>
-              </div>
-            </div>
-            <div class="menu-item menu-item-click">
-              <div class="d-flex flex-row align-items-center">
-                <i class="ki-outline ki-file fs-5 me-2 fw-500"></i>
-                <span>File</span>
-              </div>
-            </div>
-            <div class="menu-item menu-item-click">
-              <div class="d-flex flex-row align-items-center">
-                <i class="ki-outline ki-fasten fs-5 me-2 fw-500"></i>
-                <span>Liên kết</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="">
-        <div class="d-flex flex-column">
-          <div
-            class="menu-item menu-item-click d-flex flex-row align-items-center justify-content-between"
-            (click)="showFileStorage()"
-          >
-            <span>Quyền riêng tư</span>
-            <i class="ki-solid me-2" [ngClass]="isShowFileStorage ? 'ki-up' : 'ki-down'"></i>
-          </div>
-          <div *ngIf="isShowFileStorage" class="">
-            <div class="menu-item menu-item-click text-danger">
-              <div class="d-flex flex-row align-items-center">
-                <i class="ki-outline ki-eye-slash fs-5 me-2 fw-500"></i>
-                <span>Chặn</span>
-              </div>
-            </div>
-            <div class="menu-item menu-item-click text-danger">
-                <div class="d-flex flex-row align-items-center">
-                  <i class="ki-outline ki-trash fs-5 me-2 fw-500"></i>
-                  <span>Xóa đoạn chat</span>
+            </div> -->
+            <div class="">
+                <div class="d-flex flex-column">
+                    <div
+                        class="menu-item menu-item-click d-flex flex-row align-items-center justify-content-between"
+                        (click)="showCustomization()"
+                    >
+                        <span>Tùy chỉnh đoạn chat</span>
+                        <i class="ki-solid me-2" [ngClass]="isShowCustomization ? 'ki-up' : 'ki-down'"></i>
+                    </div>
+                    <div *ngIf="isShowCustomization" class="">
+                        <div class="menu-item menu-item-click">
+                            <div class="d-flex flex-row align-items-center">
+                                <i class="ki-outline ki-pin fs-5 me-2 fw-500"></i>
+                                <span>Tin nhắn đã ghim</span>
+                            </div>
+                        </div>
+                        <div class="menu-item menu-item-click">
+                            <div class="d-flex flex-row align-items-center">
+                                <i class="ki-outline ki-pencil fs-5 me-2 fw-500"></i>
+                                <span>Đổi tên đoạn chat</span>
+                            </div>
+                        </div>
+                        <div class="menu-item menu-item-click">
+                            <div class="d-flex flex-row align-items-center">
+                                <i class="ki-outline ki-instagram fs-5 me-2 fw-500"></i>
+                                <span>Thay đổi ảnh</span>
+                            </div>
+                        </div>
+                        <div class="menu-item menu-item-click">
+                            <div class="d-flex flex-row align-items-center">
+                                <i class="ki-outline ki-text fs-5 me-2 fw-500"></i>
+                                <span>Chỉnh sửa biệt danh</span>
+                            </div>
+                        </div>
+                        <div class="menu-item menu-item-click">
+                            <div class="d-flex flex-row align-items-center">
+                                <i class="ki-outline ki-like fs-5 me-2 fw-500"></i>
+                                <span>Thay đổi biểu tượng cảm xúc</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            <div class="menu-item menu-item-click text-danger">
-              <div class="d-flex flex-row align-items-center">
-                <i class="ki-outline ki-exit-right fs-5 me-2 fw-500"></i>
-                <span>Rời nhóm</span>
-              </div>
             </div>
-          </div>
+            <div class="">
+                <div class="d-flex flex-column">
+                    <div
+                        class="menu-item menu-item-click d-flex flex-row align-items-center justify-content-between"
+                        (click)="showMemberList()"
+                    >
+                        <span>Thành viên</span>
+                        <i class="ki-solid me-2" [ngClass]="isShowMemberList ? 'ki-up' : 'ki-down'"></i>
+                    </div>
+                    <div *ngIf="isShowMemberList" class="">
+                        <ng-container *ngFor="let member of conversation.members">
+                            <div class="menu-item">
+                                <div class="d-flex flex-row align-items-center">
+                                    <div class="d-flex flex-row">
+                                        <app-user-avatar [size]="45" [user]="member.user"></app-user-avatar>
+                                        <div class="d-flex flex-column align-items-start justify-content-center ms-1">
+                                            <span class="fw-500">{{ member.user.name }}</span>
+                                            <!-- <span class="fw-normal" style="font-size: 12px">Do justina thêm</span> -->
+                                        </div>
+                                    </div>
+                                    <div class="ms-auto me-1">
+                                        <i class="ki-solid ki-dots-horizontal fw-bold fs-4"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+            <div class="">
+                <div class="d-flex flex-column">
+                    <div
+                        class="menu-item menu-item-click d-flex flex-row align-items-center justify-content-between"
+                        (click)="showPrivacy()"
+                    >
+                        <span>Ảnh, file và liên kết</span>
+                        <i class="ki-solid me-2" [ngClass]="isShowPrivacy ? 'ki-up' : 'ki-down'"></i>
+                    </div>
+                    <div *ngIf="isShowPrivacy" class="">
+                        <div class="menu-item menu-item-click">
+                            <div class="d-flex flex-row align-items-center">
+                                <i class="ki-outline ki-instagram fs-5 me-2 fw-500"></i>
+                                <span>Ảnh</span>
+                            </div>
+                        </div>
+                        <div class="menu-item menu-item-click">
+                            <div class="d-flex flex-row align-items-center">
+                                <i class="ki-outline ki-file fs-5 me-2 fw-500"></i>
+                                <span>File</span>
+                            </div>
+                        </div>
+                        <div class="menu-item menu-item-click">
+                            <div class="d-flex flex-row align-items-center">
+                                <i class="ki-outline ki-fasten fs-5 me-2 fw-500"></i>
+                                <span>Liên kết</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="">
+                <div class="d-flex flex-column">
+                    <div
+                        class="menu-item menu-item-click d-flex flex-row align-items-center justify-content-between"
+                        (click)="showFileStorage()"
+                    >
+                        <span>Quyền riêng tư</span>
+                        <i class="ki-solid me-2" [ngClass]="isShowFileStorage ? 'ki-up' : 'ki-down'"></i>
+                    </div>
+                    <div *ngIf="isShowFileStorage" class="">
+                        <div class="menu-item menu-item-click text-danger">
+                            <div class="d-flex flex-row align-items-center">
+                                <i class="ki-outline ki-eye-slash fs-5 me-2 fw-500"></i>
+                                <span>Chặn</span>
+                            </div>
+                        </div>
+                        <div class="menu-item menu-item-click text-danger">
+                            <div class="d-flex flex-row align-items-center">
+                                <i class="ki-outline ki-trash fs-5 me-2 fw-500"></i>
+                                <span>Xóa đoạn chat</span>
+                            </div>
+                        </div>
+                        <div class="menu-item menu-item-click text-danger">
+                            <div class="d-flex flex-row align-items-center">
+                                <i class="ki-outline ki-exit-right fs-5 me-2 fw-500"></i>
+                                <span>Rời nhóm</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>

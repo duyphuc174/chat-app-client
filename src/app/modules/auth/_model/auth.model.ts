@@ -18,7 +18,7 @@ export class UserModel {
         this.avatar = data.avatar ? data.avatar : './assets/media/avatars/avatar-blank.jpg';
         this.isActive = data.active || true;
         this.description = data.description || '';
-        this.birthday = data.dateOfBirth || null;
+        this.birthday = new Date(data.dateOfBirth) || null;
         this.role = data.role || UserRole.USER;
     }
 }

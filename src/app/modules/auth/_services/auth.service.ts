@@ -29,11 +29,14 @@ export class AuthService {
         this.isLoadingSubject.next(true);
         return this.authHttpService.login(body).pipe(
             map((res) => {
-                const user = new UserModel();
-                user.setData(res.user);
-                this.currentUserSubject.next(user);
-                this.setTokenToLocalStorage(res.access_token);
-                return user;
+                if (res.user) {
+                    const user = new UserModel();
+                    user.setData(res.user);
+                    this.setTokenToLocalStorage(res.access_token);
+                    this.currentUserSubject.next(user);
+                    return user;
+                }
+                return undefined;
             }),
             catchError((err) => {
                 return of(err);

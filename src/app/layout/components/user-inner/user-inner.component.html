@@ -30,16 +30,15 @@
                                 </div>
                             </a>
                             <a
-                                routerLink="/profile"
                                 class="bg-hover-gray-200 text-gray-900 p-3 rounded-2"
-                                (click)="$event.stopPropagation(); userDropMenu.close()"
+                                (click)="$event.stopPropagation(); userDropMenu.close(); showChangePasswordModal()"
                             >
                                 <div class="d-flex flex-row align-items-center">
                                     <i class="ki-outline ki-lock fs-5 me-2"></i>
                                     <span>Đổi mật khẩu</span>
                                 </div>
                             </a>
-                            <a
+                            <!-- <a
                                 routerLink="/profile"
                                 class="bg-hover-gray-200 text-gray-900 p-3 rounded-2"
                                 (click)="$event.stopPropagation(); userDropMenu.close()"
@@ -48,7 +47,7 @@
                                     <i class="ki-outline ki-night-day fs-5 me-2"></i>
                                     <span>Đổi màu giao diện</span>
                                 </div>
-                            </a>
+                            </a> -->
                         </div>
                     </div>
                     <div class="d-flex flex-column">

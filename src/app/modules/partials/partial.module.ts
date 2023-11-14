@@ -14,6 +14,7 @@ import { LoadingComponent } from './loading/loading.component';
 import { NotificationComponent } from './notification/notification.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [
@@ -28,7 +29,16 @@ import { RouterModule } from '@angular/router';
         LoadingComponent,
         NotificationComponent,
     ],
-    imports: [CommonModule, NgbTooltipModule, NgSelectModule, NgbDropdownModule, HttpClientModule, RouterModule],
+    imports: [
+        CommonModule,
+        NgbTooltipModule,
+        NgSelectModule,
+        NgbDropdownModule,
+        HttpClientModule,
+        RouterModule,
+        ReactiveFormsModule,
+        FormsModule,
+    ],
     exports: [
         UserAvatarComponent,
         SearchInputComponent,

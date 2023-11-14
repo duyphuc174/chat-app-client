@@ -8,11 +8,11 @@
                 </div>
             </div>
             <div class="mt-10">
-                <div class="row">
-                    <ng-container *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]">
+                <div class="row" *ngIf="friendsList">
+                    <ng-container *ngFor="let friend of friendsList">
                         <div class="col-xl-6 col-12">
                             <app-friends-item
-                                [firstButtonTitle]="'Hủy kết bạn'"
+                                [friend]="friend"
                                 [secondButtonTitle]="'Nhắn tin'"
                                 [customClass]="'border border-gray-200'"
                                 [customBody]="'px-5'"
@@ -21,6 +21,7 @@
                         </div>
                     </ng-container>
                 </div>
+                <app-loading [isLoading$]="isLoading$"></app-loading>
             </div>
         </div>
     </div>

@@ -51,10 +51,10 @@ export class LoginComponent implements OnInit {
         const account = this.form.value.account;
         const password = this.form.value.password;
         this.authService.login({ account, password }).subscribe((res) => {
-            if (res) {
+            if (res?.id) {
                 this.router.navigate(['/home']).then();
-                this.isLoadingSubject.next(false);
             }
+            this.isLoadingSubject.next(false);
         });
     }
 }

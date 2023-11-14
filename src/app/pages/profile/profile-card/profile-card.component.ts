@@ -6,7 +6,7 @@ import { UserModel } from 'src/app/modules/auth/_model/auth.model';
 import { ProfileService } from '../_services/profile.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { ProfileUpdateModalComponent } from '../profile-update-modal/profile-update-modal.component';
-import { FriendStatus } from '../../friends/_models/friend.model';
+import { FriendStatus, getTextFriendStatus } from '../../friends/_models/friend.model';
 import { FriendService } from '../../friends/_services/friend.service';
 
 @Component({
@@ -28,6 +28,8 @@ export class ProfileCardComponent implements OnInit {
 
     isLoadingSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     isLoading$: Observable<boolean> = new Observable<boolean>();
+
+    getTextStatus = getTextFriendStatus;
 
     constructor(
         private activateRoute: ActivatedRoute,
@@ -53,6 +55,8 @@ export class ProfileCardComponent implements OnInit {
                     this.userSubject.next(this.userLogged);
                 } else {
                     this.profileService.getUser(this.profileId).subscribe((res) => {
+                        console.log(res);
+
                         this.userSubject.next(res.user);
                         this.status = res.friendStatus;
                     });

@@ -29,12 +29,8 @@ export class ProfileService {
     getUser(id: number): Observable<FriendModel> {
         return this.profileHttpService.getUser(id).pipe(
             map((res) => {
-                const u = new UserModel();
-                u.setData(res.user);
-                const friend: FriendModel = {
-                    user: u,
-                    friendStatus: res.friend_status,
-                };
+                const friend = new FriendModel();
+                friend.setData(res.data);
                 return friend;
             }),
             catchError(() => {
@@ -62,6 +58,17 @@ export class ProfileService {
                 const user = new UserModel();
                 user.setData(res.data);
                 return user;
+            }),
+            catchError(() => {
+                return of();
+            }),
+        );
+    }
+
+    changePassword(body): Observable<any> {
+        return this.profileHttpService.changePassword(body).pipe(
+            map((res) => {
+                return res;
             }),
             catchError(() => {
                 return of();

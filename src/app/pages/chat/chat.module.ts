@@ -15,6 +15,9 @@ import { ChatBoxMenuComponent } from './components/chat-box/chat-box-menu/chat-b
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { ChatConversationCreateComponent } from './components/chat-conversation-create/chat-conversation-create.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ChatImageComponent } from './components/chat-image/chat-image.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
     declarations: [
@@ -27,6 +30,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
         ChatBoxMessageComponent,
         ChatBoxMenuComponent,
         ChatConversationCreateComponent,
+        ChatImageComponent,
     ],
     imports: [
         CommonModule,
@@ -36,6 +40,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
         RouterModule,
         NgbTooltipModule,
         ModalModule,
+        ReactiveFormsModule,
+        InfiniteScrollModule,
     ],
 })
 export class ChatModule {}

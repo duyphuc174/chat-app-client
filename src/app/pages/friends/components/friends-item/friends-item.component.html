@@ -1,11 +1,11 @@
-<div class="card mb-5 {{ customClass }}">
+<div class="card mb-5 {{ customClass }}" *ngIf="friend">
     <div class="card-body {{ customBody }}">
         <div class="d-flex align-items-center justify-content-between">
             <div class="d-flex flex-row d-flex align-items-center">
-                <app-user-avatar [size]="avatarSize"></app-user-avatar>
+                <app-user-avatar [size]="avatarSize" [user]="friend.user"></app-user-avatar>
                 <div class="d-flex flex-column ms-3">
-                    <span class="fw-bold fs-5">Nguyễn Duy Phúc</span>
-                    <span class="text-gray-500 fs-7">Sống tại Thanh Hóa</span>
+                    <span class="fw-bold fs-5">{{ friend.user.name }}</span>
+                    <span class="text-gray-500 fs-7">{{ friend.user.birthday | date : 'dd/MM/yyyy' }}</span>
                 </div>
             </div>
             <div class="d-flex align-items-center flex-row">

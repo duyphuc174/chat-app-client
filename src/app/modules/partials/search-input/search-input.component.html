@@ -1,6 +1,6 @@
-<div class="position-relative">
+<div class="position-relative" style="margin-right: 4.5px">
     <div class="position-absolute top-50 start-0 translate-middle-y" style="margin-left: 12px; margin-top: 2px">
         <i class="ki-solid ki-magnifier fs-2"></i>
     </div>
-    <input [placeholder]="placeholder" type="text" class="form-control {{ customClass }}" />
+    <input (input)="search($event)" [placeholder]="placeholder" type="text" class="form-control {{ customClass }}" />
 </div>

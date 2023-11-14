@@ -14,11 +14,11 @@ export class ProfileHttpService {
     constructor(private http: HttpClient) {}
 
     getUsers(): Observable<any[]> {
-        return this.http.get<any[]>(`${API_USERS_URL}`);
+        return this.http.get<any[]>(`${API_USERS_URL}/getusers/all`);
     }
 
     getUser(id: number): Observable<any> {
-        return this.http.get<any>(`${API_USERS_URL}/${id}`);
+        return this.http.get<any>(`${API_USERS_URL}/getuser/${id}`);
     }
 
     updateAvatar(body: any): Observable<any> {
@@ -26,6 +26,10 @@ export class ProfileHttpService {
     }
 
     updateProfile(body: IUserUpdate): Observable<any> {
-        return this.http.put<any>(`${API_USERS_URL}`, body);
+        return this.http.put<any>(`${API_USERS_URL}/update/user`, body);
+    }
+
+    changePassword(body): Observable<any> {
+        return this.http.put<any>(`${API_USERS_URL}/set/change-password`, body);
     }
 }

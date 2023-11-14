@@ -45,14 +45,7 @@
                         <ng-container *ngIf="profileId !== userLogged.id; else ownerProfile">
                             <button class="btn btn-primary me-5" (click)="submitFriend()">
                                 <i class="ki-outline ki-user"></i>
-                                <ng-container *ngIf="status === friendStatus.NO_RELATIVE"> Thêm bạn bè </ng-container>
-                                <ng-container *ngIf="status === friendStatus.WAITING_FOR_ACCEPT">
-                                    Hủy lời mời
-                                </ng-container>
-                                <ng-container *ngIf="status === friendStatus.GET_AN_INVITATION">
-                                    Chấp nhận lời mời
-                                </ng-container>
-                                <ng-container *ngIf="status === friendStatus.ACCEPTED"> Xóa bạn bè </ng-container>
+                                {{ getTextStatus(status) }}
                             </button>
                             <button class="btn btn-secondary">
                                 <i class="ki-outline ki-messages"></i>
