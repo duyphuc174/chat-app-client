@@ -22,6 +22,10 @@ const Routing: Routes = [
         path: 'friends',
         loadChildren: () => import('./friends/friends.module').then((m) => m.FriendsModule),
     },
+    {
+        path: 'admin',
+        loadChildren: () => import('./admin/admin.module').then((m) => m.AdminModule),
+    },
 ];
 
 export { Routing };

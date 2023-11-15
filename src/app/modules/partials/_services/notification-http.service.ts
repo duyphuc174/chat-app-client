@@ -14,4 +14,8 @@ export class NotificationHttpService {
     getNotifications(): Observable<any> {
         return this.http.get<any>(`${API_NOTIFICATION_URL}`);
     }
+
+    markIsReadNotification(id: number): Observable<any> {
+        return this.http.post<any>(`${API_NOTIFICATION_URL}/${id}`, {});
+    }
 }

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-modal-footer',
@@ -11,6 +12,7 @@ export class ModalFooterComponent {
     @Input() buttonName: string;
     @Output() submitModal: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Input() disabled: any;
+    @Input() isLoading$: Observable<boolean>;
 
     constructor(public bsModalRef: BsModalRef) {}
 

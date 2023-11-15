@@ -2,7 +2,7 @@
     *ngIf="conversation"
     class="d-flex flex-row align-items-center p-3 rounded-2 chat-list-item"
     routerLinkActive="active"
-    routerLink="/chat/messages/{{ conversation.id }}"
+    routerLink="{{ routerLink }}"
 >
     <!-- <app-user-avatar [size]="54"></app-user-avatar> -->
     <app-chat-image [size]="54" [image]="conversation.image"></app-chat-image>

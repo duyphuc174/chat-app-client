@@ -10,6 +10,7 @@ import { UserModel } from 'src/app/modules/auth/_model/auth.model';
 export class FriendService {
     friendsRequestSubject: BehaviorSubject<FriendModel[]> = new BehaviorSubject<FriendModel[]>([]);
     friendsListSubject: BehaviorSubject<FriendModel[]> = new BehaviorSubject<FriendModel[]>([]);
+    friendsSubject: BehaviorSubject<FriendModel[]> = new BehaviorSubject<FriendModel[]>([]);
 
     get friendsRequest() {
         return this.friendsRequestSubject.value;
@@ -17,6 +18,10 @@ export class FriendService {
 
     get friendsList() {
         return this.friendsListSubject.value;
+    }
+
+    get friends() {
+        return this.friendsSubject.value;
     }
 
     constructor(private friendHttpService: FriendHttpService) {}
@@ -38,6 +43,14 @@ export class FriendService {
                     return d.friendStatus === FriendStatus.ACCEPTED;
                 });
                 this.friendsListSubject.next(frList);
+
+                const fr = data.filter((d) => {
+                    return (
+                        d.friendStatus === FriendStatus.WAITING_FOR_ACCEPT ||
+                        d.friendStatus === FriendStatus.NO_RELATIVE
+                    );
+                });
+                this.friendsSubject.next(fr);
             }),
             map((res) => {
                 return res.map((r) => {
@@ -72,6 +85,20 @@ export class FriendService {
                 }
                 return of(false);
             }),
+            catchError(() => of(false)),
+        );
+    }
+
+    rejectFriend(body): Observable<any> {
+        return this.friendHttpService.rejectFriend(body).pipe(
+            map((res) => res),
+            catchError(() => of(false)),
+        );
+    }
+
+    deleteFriend(id): Observable<any> {
+        return this.friendHttpService.deleteFriend(id).pipe(
+            map((res) => res),
             catchError(() => of(false)),
         );
     }

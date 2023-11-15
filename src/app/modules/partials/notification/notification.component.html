@@ -43,7 +43,7 @@
         <a
             class="cursor-pointer"
             routerLink="profile/{{ notification.sender.id }}"
-            (click)="$event.stopPropagation(); notificationDropMenu.close()"
+            (click)="$event.stopPropagation(); notificationDropMenu.close(); markNotificationIsRead(notification)"
         >
             <div class="d-flex flex-row bg-hover-gray-200 p-3 rounded">
                 <div class="me-3">

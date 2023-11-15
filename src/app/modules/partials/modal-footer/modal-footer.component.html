@@ -1,8 +1,18 @@
 <div class="modal-footer border-2 px-8 py-4">
-    <div class="">
+    <div class="" *ngIf="!(isLoading$ | async); else loadingTpl">
         <button type="button" class="btn btn-secondary me-3 w-100px fw-bold" (click)="bsModalRef?.hide()">Hủy</button>
         <button type="button" class="btn btn-primary w-150px fw-bold" [disabled]="disabled" (click)="submit()">
             {{ buttonName }}
         </button>
     </div>
+    <ng-template #loadingTpl>
+        <button
+            type="button"
+            class="btn btn-primary w-150px fw-bold"
+            [disabled]="isLoading$ | async"
+            (click)="submit()"
+        >
+            <app-loading [title]="'Đang load...'"></app-loading>
+        </button>
+    </ng-template>
 </div>

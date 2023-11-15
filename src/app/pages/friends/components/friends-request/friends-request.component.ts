@@ -29,4 +29,16 @@ export class FriendsRequestComponent implements OnInit {
             this.isLoadingSubject.next(false);
         });
     }
+
+    acept(friend: FriendModel) {
+        this.friendService.acceptFriend(friend.user.id).subscribe((res) => {
+            this.loadData();
+        });
+    }
+
+    reject(friend: FriendModel) {
+        this.friendService.deleteFriend(friend.user.id).subscribe((res) => {
+            this.loadData();
+        });
+    }
 }

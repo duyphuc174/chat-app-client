@@ -3,7 +3,7 @@ import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/modules/auth';
-import { UserModel } from 'src/app/modules/auth/_model/auth.model';
+import { UserModel, UserRole } from 'src/app/modules/auth/_model/auth.model';
 import { NotificationComponent } from 'src/app/modules/partials/notification/notification.component';
 import { ChangePasswordModalComponent } from 'src/app/pages/profile/change-password-modal/change-password-modal.component';
 
@@ -14,6 +14,7 @@ import { ChangePasswordModalComponent } from 'src/app/pages/profile/change-passw
 })
 export class UserInnerComponent implements OnInit {
     user$: Observable<UserModel>;
+    role = UserRole;
 
     constructor(config: NgbDropdownConfig, private authService: AuthService, private bsModalService: BsModalService) {
         config.placement = 'end-bottom';

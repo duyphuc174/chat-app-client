@@ -20,6 +20,15 @@ export class ChatService {
         );
     }
 
+    createConversationByUser(body: any): Observable<any> {
+        return this.chatHttpService.createConversationByUser(body).pipe(
+            map((res) => {
+                return res.data;
+            }),
+            catchError(() => of(undefined)),
+        );
+    }
+
     getConversations(params?: { [key: string]: any }): Observable<ConversationModel[]> {
         return this.chatHttpService.getConversations(params).pipe(
             map((res) => {
@@ -45,6 +54,20 @@ export class ChatService {
         );
     }
 
+    getConversationByUserId(id: number): Observable<ConversationModel> {
+        return this.chatHttpService.getConversationByUserId(id).pipe(
+            map((res) => {
+                if (res) {
+                    const conver = new ConversationModel();
+                    conver.setData(res.data);
+                    return conver;
+                }
+                return null;
+            }),
+            catchError(() => of(undefined)),
+        );
+    }
+
     getMessages(conversationId: number, params?: { [key: string]: any }): Observable<MessageModel[]> {
         return this.chatHttpService.getMessages(conversationId, params).pipe(
             map((res) => {
@@ -59,8 +82,36 @@ export class ChatService {
         );
     }
 
+    getMessagesByUserId(userId: number, params?: { [key: string]: any }): Observable<MessageModel[]> {
+        return this.chatHttpService.getMessagesByUserId(userId, params).pipe(
+            map((res) => {
+                this.currentPage = res.message.current_page || 1;
+                return res.message.data.map((message) => {
+                    const mess = new MessageModel();
+                    mess.setData(message);
+                    return mess;
+                });
+            }),
+            catchError(() => of(undefined)),
+        );
+    }
+
     createMessage(body: IBodyPostMessage): Observable<any> {
         return this.chatHttpService.createMessage(body).pipe(
+            map((res) => res),
+            catchError(() => of(undefined)),
+        );
+    }
+
+    createImageMessage(body): Observable<any> {
+        return this.chatHttpService.createImageMessage(body).pipe(
+            map((res) => res),
+            catchError(() => of(undefined)),
+        );
+    }
+
+    createReaction(body): Observable<any> {
+        return this.chatHttpService.createReaction(body).pipe(
             map((res) => res),
             catchError(() => of(undefined)),
         );

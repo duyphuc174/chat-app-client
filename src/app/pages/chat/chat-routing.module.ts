@@ -11,6 +11,12 @@ const routes: Routes = [
             {
                 path: 'messages/:id',
                 component: ChatBoxComponent,
+                data: { type: 'group' },
+            },
+            {
+                path: 'messages/single/:id',
+                component: ChatBoxComponent,
+                data: { type: 'single' },
             },
         ],
     },

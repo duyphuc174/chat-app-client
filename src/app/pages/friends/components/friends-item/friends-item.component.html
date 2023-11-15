@@ -9,10 +9,14 @@
                 </div>
             </div>
             <div class="d-flex align-items-center flex-row">
-                <button *ngIf="firstButtonTitle" (click)="clickFirstBtn()" class="btn btn-sm btn-primary me-3">
-                    {{ firstButtonTitle }}
+                <button (click)="clickFirstBtn()" class="btn btn-sm btn-primary me-3">
+                    {{ getTextStatus(friend.friendStatus) }}
                 </button>
-                <button *ngIf="secondButtonTitle" (click)="clickSecondBtn()" class="btn btn-sm btn-info">
+                <button
+                    *ngIf="secondButtonTitle && friend.friendStatus === friendStatus.ACCEPTED"
+                    (click)="clickSecondBtn()"
+                    class="btn btn-sm btn-info"
+                >
                     {{ secondButtonTitle }}
                 </button>
             </div>

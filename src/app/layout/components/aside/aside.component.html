@@ -33,7 +33,14 @@
                         routerLinkActive="bg-info"
                         class="bg-hover-info rounded-2 px-3 py-4 d-flex align-items-center justify-content-center"
                     >
-                        <i class="ki-outline ki-profile-user fs-1 text-gray-300"></i>
+                        <i class="ki-outline ki-profile-user fs-1 text-gray-300 position-relative">
+                            <div
+                                *ngIf="friendRequestCount"
+                                class="fs-7 px-2 py-1 position-absolute top-0 start-100 translate-middle rounded bg-danger"
+                            >
+                                {{ friendRequestCount }}
+                            </div>
+                        </i>
                     </a>
                 </div>
             </div>

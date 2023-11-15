@@ -1,11 +1,8 @@
-<div class="d-flex align-items-center justify-content-center rounded-circle reaction">
-    <i class="ki-solid ki-emoji-happy fw-bold fs-5 text-primary"></i>
+<div class="d-flex align-items-center justify-content-center rounded-circle reaction" style="z-index: 99999">
+    <i class="ki-solid ki-emoji-happy fw-bold fs-5 text-{{ color }}"></i>
     <div class="reaction-list">
-        <div class="reaction-list-item">😀</div>
-        <div class="reaction-list-item">🙂</div>
-        <div class="reaction-list-item">🙂</div>
-        <div class="reaction-list-item">🙂</div>
-        <div class="reaction-list-item">🙂</div>
-        <div class="reaction-list-item">🙂</div>
+        <ng-container *ngFor="let reaction of reactions">
+            <div class="reaction-list-item" (click)="send(reaction.content)">{{ reaction.content }}</div>
+        </ng-container>
     </div>
 </div>

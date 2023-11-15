@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FriendService } from 'src/app/pages/friends/_services/friend.service';
 
 @Component({
     selector: 'app-aside',
@@ -6,6 +7,14 @@ import { Component } from '@angular/core';
     styleUrls: ['./aside.component.scss'],
 })
 export class AsideComponent {
+    friendRequestCount: number;
+
+    constructor(private friendService: FriendService) {
+        this.friendService.getFriends().subscribe((res) => {
+            this.friendRequestCount = this.friendService.friendsRequest.length;
+        });
+    }
+
     mode: string = localStorage.getItem('app-mode') || 'light';
     changeMode() {
         if (this.mode === 'light') {

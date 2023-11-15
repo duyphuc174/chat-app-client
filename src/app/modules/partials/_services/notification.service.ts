@@ -40,4 +40,13 @@ export class NotificationService {
             catchError(() => of()),
         );
     }
+
+    markIsReadNotification(id: number): Observable<any> {
+        return this.notificationHttpService.markIsReadNotification(id).pipe(
+            map((res) => {
+                return res;
+            }),
+            catchError(() => of()),
+        );
+    }
 }

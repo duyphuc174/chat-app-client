@@ -38,16 +38,28 @@
                                     <span>Đổi mật khẩu</span>
                                 </div>
                             </a>
-                            <!-- <a
-                                routerLink="/profile"
-                                class="bg-hover-gray-200 text-gray-900 p-3 rounded-2"
-                                (click)="$event.stopPropagation(); userDropMenu.close()"
-                            >
-                                <div class="d-flex flex-row align-items-center">
-                                    <i class="ki-outline ki-night-day fs-5 me-2"></i>
-                                    <span>Đổi màu giao diện</span>
-                                </div>
-                            </a> -->
+                            <ng-container *ngIf="userLogged.role === role.ADMIN">
+                                <a
+                                    routerLink="/admin/users"
+                                    class="bg-hover-gray-200 text-gray-900 p-3 rounded-2"
+                                    (click)="$event.stopPropagation(); userDropMenu.close()"
+                                >
+                                    <div class="d-flex flex-row align-items-center">
+                                        <i class="ki-outline ki-user-tick fs-5 me-2"></i>
+                                        <span>Quản lý người dùng</span>
+                                    </div>
+                                </a>
+                                <a
+                                    routerLink="/admin/conversations"
+                                    class="bg-hover-gray-200 text-gray-900 p-3 rounded-2"
+                                    (click)="$event.stopPropagation(); userDropMenu.close()"
+                                >
+                                    <div class="d-flex flex-row align-items-center">
+                                        <i class="ki-outline ki-user-tick fs-5 me-2"></i>
+                                        <span>Quản lý nhóm chat</span>
+                                    </div>
+                                </a>
+                            </ng-container>
                         </div>
                     </div>
                     <div class="d-flex flex-column">

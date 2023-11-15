@@ -1,0 +1,51 @@
+<div class="p-10">
+    <div class="d-flex flex-row align-items-center justify-content-between">
+        <span class="fs-2 fw-bold"> Danh sách người dùng </span>
+        <button class="btn btn-primary">Thêm người dùng</button>
+    </div>
+    <div class="mt-7">
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-custom table-row-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Tên</th>
+                            <th scope="col">Tài khoản</th>
+                            <th scope="col">Ảnh</th>
+                            <th scope="col">Ngày sinh</th>
+                            <th scope="col">Thời gian tạo</th>
+                            <th scope="col">Role</th>
+                            <th scope="col">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="users$ | async as users">
+                        <ng-container *ngFor="let user of users">
+                            <tr>
+                                <th scope="row">{{ user.id }}</th>
+                                <td>{{ user.name }}</td>
+                                <td>{{ user.account }}</td>
+                                <td>
+                                    <div class="w-50px h-50px rounded">
+                                        <img [src]="user.avatar" alt="" class="w-100 h-100 rouned" />
+                                    </div>
+                                </td>
+                                <td>{{ user.birthday | date : 'HH:mm dd-MM-yyyy' }}</td>
+                                <td>{{ user.createdAt }}</td>
+                                <td>{{ user.role }}</td>
+                                <td>
+                                    <button class="btn btn-icon btn-warning me-3">
+                                        <i class="ki-outline ki-notepad-edit"></i>
+                                    </button>
+                                    <button class="btn btn-icon btn-danger">
+                                        <i class="ki-outline ki-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

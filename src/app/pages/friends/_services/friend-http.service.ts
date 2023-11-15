@@ -23,4 +23,12 @@ export class FriendHttpService {
     acceptFriend(id: number): Observable<any> {
         return this.http.post<any>(`${API_FRIEND_URL}/${id}`, {});
     }
+
+    rejectFriend(body) {
+        return this.http.delete<any>(`${API_FRIEND_URL}/type/rejected`, body);
+    }
+
+    deleteFriend(id: number) {
+        return this.http.delete<any>(`${API_FRIEND_URL}/${id}`);
+    }
 }

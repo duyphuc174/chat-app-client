@@ -11,7 +11,10 @@ export class NotificationModel {
     setData(data: any) {
         this.id = data.id;
         this.type = data.type;
-        this.content = this.type === NotificationType.INVITATION ? 'đã gửi cho bạn lời mời kết bạn' : '';
+        this.content =
+            this.type === NotificationType.INVITATION
+                ? 'đã gửi cho bạn lời mời kết bạn'
+                : 'đã chấp nhận lời mời kết bạn';
         if (data.sender) {
             const user = new UserModel();
             user.setData(data.sender);

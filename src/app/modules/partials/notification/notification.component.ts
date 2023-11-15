@@ -64,4 +64,14 @@ export class NotificationComponent implements OnInit {
             }
         });
     }
+
+    markNotificationIsRead(notification: NotificationModel) {
+        this.notificationService.markIsReadNotification(notification.id).subscribe((res) => {
+            this.notificationNotReadTotal--;
+            const notis = this.notificationsSubject.value;
+            const index = notis.findIndex((noti) => noti.id === notification.id);
+            notis[index].isRead = true;
+            this.notificationsSubject.next(notis);
+        });
+    }
 }

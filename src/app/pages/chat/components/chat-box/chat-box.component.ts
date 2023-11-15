@@ -15,6 +15,7 @@ import {
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { PusherService } from 'src/app/modules/partials/_services/pusher.service';
 import { AuthService } from 'src/app/modules/auth';
+import { FriendModel } from 'src/app/pages/friends/_models/friend.model';
 
 @Component({
     selector: 'app-chat-box',
@@ -27,6 +28,7 @@ export class ChatBoxComponent implements OnInit, OnChanges, OnDestroy {
     ownerId: number;
     conversationId: number;
     form: UntypedFormGroup;
+    type: any = 'group';
 
     isShowMenu: boolean = true;
     conversationSubject: BehaviorSubject<ConversationModel> = new BehaviorSubject<ConversationModel>(undefined);
@@ -53,6 +55,17 @@ export class ChatBoxComponent implements OnInit, OnChanges, OnDestroy {
 
     canViewMore: boolean = true;
 
+    imgPreview: string = '';
+    imageFile: File;
+
+    user: FriendModel;
+
+    messageResponse: {
+        user: UserModel;
+        content: string;
+        messageId: number;
+    };
+
     constructor(
         private router: Router,
         private activatedRoute: ActivatedRoute,
@@ -62,12 +75,21 @@ export class ChatBoxComponent implements OnInit, OnChanges, OnDestroy {
         private pusherService: PusherService,
         private auth: AuthService,
     ) {
+        activatedRoute.data.subscribe((res) => {
+            this.type = res.type;
+        });
+
         this.routeSubscription = this.activatedRoute.params.subscribe((param) => {
-            this.ownerId = this.auth.currentUserValue.id;
-            this.userId = +param.id;
-            this.conversationId = +param.id;
-            this.loadPusher();
-            this.loadData();
+            if (this.type === 'single') {
+                this.userId = +param.id;
+                this.loadDataSingle();
+            }
+            if (this.type === 'group') {
+                this.ownerId = this.auth.currentUserValue.id;
+                this.conversationId = +param.id;
+                this.loadPusher();
+                this.loadData();
+            }
         });
     }
     ngOnInit(): void {
@@ -88,11 +110,30 @@ export class ChatBoxComponent implements OnInit, OnChanges, OnDestroy {
         this.chatService.getConversationById(this.conversationId).subscribe((res) => {
             if (res) {
                 this.conversationSubject.next(res);
-                // this.router.navigate([`chat/messages/${res[0].id}`]);
             }
             this.isLoadSubject.next(false);
         });
         this.loadMessages();
+    }
+
+    loadDataSingle() {
+        this.canViewMore = true;
+        this.messageContainers = [];
+        this.currentUserMessage = undefined;
+        this.isLoadSubject.next(true);
+        this.chatService.getConversationByUserId(this.userId).subscribe((res) => {
+            if (res) {
+                this.conversationSubject.next(res);
+                this.conversationId = res.id;
+                this.loadMessages();
+            } else {
+                this.profileService.getUser(this.userId).subscribe((res) => {
+                    this.user = res;
+                    console.log(res);
+                });
+            }
+            this.isLoadSubject.next(false);
+        });
     }
 
     loadMessages(reload: boolean = false) {
@@ -103,6 +144,8 @@ export class ChatBoxComponent implements OnInit, OnChanges, OnDestroy {
 
         this.chatService.getMessages(this.conversationId, { page: this.currentPage }).subscribe((res) => {
             this.messageList = res;
+            console.log(this.messageList);
+
             if (res.length < 20) {
                 this.canViewMore = false;
             }
@@ -149,18 +192,36 @@ export class ChatBoxComponent implements OnInit, OnChanges, OnDestroy {
 
         this.isLoadSendMessageSubject.next(true);
 
-        const body: IBodyPostMessage = {
-            conversationId: this.conversationId,
-            content: content,
-            type: MessageType.TEXT,
-        };
+        if (this.user) {
+            const body = {
+                type: 'text',
+                user: this.user.user.id,
+                content: content,
+            };
+            this.chatService.createConversationByUser(body).subscribe((res) => {
+                console.log(res);
+            });
+        } else {
+            const body: IBodyPostMessage = {
+                conversationId: this.conversationId,
+                content: content,
+                type: MessageType.TEXT,
+            };
 
-        this.chatService.createMessage(body).subscribe((res) => {
-            if (!res.status) {
-                this.form.reset();
+            if (this.messageResponse) {
+                body.parentMessageId = this.messageResponse.messageId;
             }
-            this.isLoadSendMessageSubject.next(false);
-        });
+
+            this.chatService.createMessage(body).subscribe((res) => {
+                if (!res.status) {
+                    this.form.reset();
+                    if (this.messageResponse) {
+                        this.deleteMessageResponse();
+                    }
+                }
+                this.isLoadSendMessageSubject.next(false);
+            });
+        }
     }
 
     loadPusher() {
@@ -214,6 +275,12 @@ export class ChatBoxComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
+    addContent(content) {
+        const curContent = this.form.get('content').value;
+        const newContent = curContent + content;
+        this.form.patchValue({ content: newContent });
+    }
+
     showMenu() {
         this.isShowMenu = !this.isShowMenu;
     }
@@ -226,7 +293,49 @@ export class ChatBoxComponent implements OnInit, OnChanges, OnDestroy {
 
     ngOnChanges(changes: SimpleChanges): void {}
 
+    setMessageResponse({ user, content, id }) {
+        this.messageResponse = {
+            user,
+            content,
+            messageId: id,
+        };
+    }
+
+    deleteMessageResponse() {
+        this.messageResponse = undefined;
+    }
+
+    readURL(event: Event | any) {
+        if (event.target.files && event.target.files[0]) {
+            this.imageFile = event.target.files[0];
+            const reader = new FileReader();
+            reader.onload = () => (this.imgPreview = reader.result as string);
+            reader.readAsDataURL(this.imageFile);
+        }
+    }
+
+    sendImageMessage() {
+        if (!this.imageFile && !this.imgPreview) {
+            return;
+        }
+        const formData = new FormData();
+        formData.append('file[]', this.imageFile);
+        formData.append('type', 'image');
+        formData.append('conversationId', this.conversationId.toString());
+        this.chatService.createImageMessage(formData).subscribe((res) => {
+            this.cancelUploadImage();
+        });
+    }
+
+    cancelUploadImage() {
+        this.imgPreview = '';
+        this.imageFile = null;
+    }
+
     ngOnDestroy(): void {
+        this.canViewMore = true;
+        this.messageContainers = [];
+        this.currentUserMessage = undefined;
         this.routeSubscription.unsubscribe();
     }
 }

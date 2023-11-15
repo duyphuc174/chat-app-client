@@ -96,7 +96,10 @@ export class ProfileCardComponent implements OnInit {
         const initialState = {
             userLogged: this.userLogged,
         };
-        this.bsModalService.show(ProfileUpdateModalComponent, { initialState });
+        const bsModalRef = this.bsModalService.show(ProfileUpdateModalComponent, { initialState });
+        bsModalRef.onHidden.subscribe(() => {
+            this.loadData();
+        });
     }
 
     submitFriend() {
@@ -111,8 +114,22 @@ export class ProfileCardComponent implements OnInit {
                     this.status = this.friendStatus.ACCEPTED;
                 });
                 break;
+            case this.friendStatus.ACCEPTED:
+                this.friendService.deleteFriend(this.profileId).subscribe((res) => {
+                    this.status = this.friendStatus.NO_RELATIVE;
+                });
+                break;
+            case this.friendStatus.WAITING_FOR_ACCEPT:
+                this.friendService.deleteFriend(this.profileId).subscribe((res) => {
+                    this.status = this.friendStatus.NO_RELATIVE;
+                });
+                break;
             default:
                 return;
         }
+    }
+
+    goToChat() {
+        this.router.navigate([`/chat/messages/single/${this.profileId}`]).then();
     }
 }

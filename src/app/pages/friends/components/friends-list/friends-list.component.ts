@@ -28,4 +28,10 @@ export class FriendsListComponent {
             this.isLoadingSubject.next(false);
         });
     }
+
+    delete(friend: FriendModel) {
+        this.friendService.deleteFriend(friend.user.id).subscribe((res) => {
+            this.loadData();
+        });
+    }
 }

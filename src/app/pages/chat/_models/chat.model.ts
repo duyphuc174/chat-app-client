@@ -16,10 +16,10 @@ export class ConversationModel {
     setData(data) {
         this.id = data.id;
         this.creatorId = data.creatorId;
-        this.name = data.name || '';
         this.type = data.type || ConversationType.SINGLE;
-        this.image = data.image || './assets/media/avatars/avatar-blank.jpg';
         this.status = data.status || ConversationStatus.CHATTING;
+        this.updateAt = new Date(data.updated_at);
+
         if (data.members?.length) {
             this.members = data.members.map((member) => {
                 const user = new UserModel();
@@ -32,7 +32,6 @@ export class ConversationModel {
         } else {
             this.members = [];
         }
-        this.updateAt = new Date(data.updated_at);
         if (data.lastMessage) {
             const lm = new MessageContainerItem();
             lm.setData2(data.lastMessage);
@@ -50,6 +49,9 @@ export class ConversationModel {
             }
         }
         this.isRead = data.isRead ? data.isRead : false;
+
+        this.name = data.name || '';
+        this.image = data.image || './assets/media/avatars/avatar-blank.jpg';
     }
 }
 
@@ -63,7 +65,7 @@ export class MessageModel {
     updateAt: Date;
     userSent: UserModel;
     images: string[];
-    messageParent: MessageModel;
+    messageParent: ParentMessage;
 
     setData(data) {
         this.id = data.id;
@@ -78,6 +80,23 @@ export class MessageModel {
         this.userSent = user;
         this.images = data.images;
         // this.messageParent = parent;
+        if (data.parents) {
+            const mess = new ParentMessage();
+            mess.setData(data.parents);
+            this.messageParent = mess;
+        }
+    }
+}
+
+export class ParentMessage {
+    id: number;
+    content: string;
+    images: string[];
+
+    setData(data) {
+        this.id = data.id;
+        this.content = data.content;
+        this.images = data.images;
     }
 }
 
@@ -91,12 +110,24 @@ export class MessageContainerItem {
     content: string;
     isDeleted: boolean;
     createdAt: Date;
+    parentMessage: ParentMessage;
+    image: string;
+    type: MessageType;
 
     setData(data) {
         this.id = data.id;
         this.content = data.content;
         this.isDeleted = data.isDeleted;
         this.createdAt = new Date(data.createdAt);
+        if (data.messageParent) {
+            const mess = new ParentMessage();
+            mess.setData(data.messageParent);
+            this.parentMessage = mess;
+        }
+        if (data?.images?.length) {
+            this.image = data.images[0].file;
+        }
+        this.type = data.type;
     }
 
     setData2(data) {
@@ -107,6 +138,29 @@ export class MessageContainerItem {
         this.createdAt = new Date(data.created_at);
     }
 }
+
+export const listReactions = [
+    {
+        name: 'like',
+        content: '👍',
+    },
+    {
+        name: 'tym',
+        content: '❤️',
+    },
+    {
+        name: 'haha',
+        content: '😂',
+    },
+    {
+        name: 'sad',
+        content: '😞',
+    },
+    {
+        name: 'angry',
+        content: '😡',
+    },
+];
 
 export interface IBodyPostMessage {
     conversationId: number;

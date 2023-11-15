@@ -3,7 +3,16 @@
     <div class="card-body">
         <div class="form-group mb-5">
             <label for="" class="form-label required">Tên của bạn</label>
-            <input placeholder="Nhập tên của bạn..." class="form-control" formControlName="fullName" type="text" />
+            <input
+                placeholder="Nhập tên của bạn..."
+                class="form-control"
+                formControlName="fullName"
+                type="text"
+                [ngClass]="{
+                'is-invalid': form.controls['fullName'].invalid,
+                'is-valid': form.controls['fullName'].valid,
+              }"
+            />
         </div>
 
         <div class="form-group mb-5">
@@ -16,6 +25,10 @@
                 [bsConfig]="{ startView: 'year' }"
                 bsDatepicker
                 type="text"
+                [ngClass]="{
+                    'is-invalid': form.controls['dateOfBirth'].invalid,
+                    'is-valid': form.controls['dateOfBirth'].valid,
+                  }"
             />
         </div>
 
@@ -33,4 +46,4 @@
         </div>
     </div>
 </form>
-<app-modal-footer [buttonName]="'Cập nhật'" (submitModal)="submit()"></app-modal-footer>
+<app-modal-footer [buttonName]="'Cập nhật'" (submitModal)="submit()" [isLoading$]="isLoading$"></app-modal-footer>

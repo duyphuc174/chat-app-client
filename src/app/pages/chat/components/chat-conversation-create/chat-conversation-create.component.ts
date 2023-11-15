@@ -6,6 +6,7 @@ import { FriendModel } from 'src/app/pages/friends/_models/friend.model';
 import { FriendService } from 'src/app/pages/friends/_services/friend.service';
 import { ChatService } from '../../_services/chat.service';
 import { BsModalRef } from 'ngx-bootstrap/modal';
+import { ConversationModel } from '../../_models/chat.model';
 
 @Component({
     selector: 'app-chat-conversation-create',
@@ -13,6 +14,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
     styleUrls: ['./chat-conversation-create.component.scss'],
 })
 export class ChatConversationCreateComponent implements OnInit {
+    @Input() conversation: ConversationModel;
     friendsList: { friend: FriendModel; choosen: boolean }[] = [];
     friendsShow: { friend: FriendModel; choosen: boolean }[] = [];
     friendChoosen: FriendModel[];
@@ -61,7 +63,9 @@ export class ChatConversationCreateComponent implements OnInit {
         const name = this.form.value.name;
         const users = this.friendChoosen.map((item) => item.user.id);
         const formData = new FormData();
-        formData.append('file[]', this.imageFile);
+        if (this.imageFile) {
+            formData.append('file[]', this.imageFile);
+        }
         formData.append('name', name);
         formData.append('type', 'group');
         formData.append('status', 'texted');

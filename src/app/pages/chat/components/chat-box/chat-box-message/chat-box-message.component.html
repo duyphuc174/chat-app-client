@@ -5,10 +5,42 @@
         </div>
         <div class="d-flex flex-column">
             <ng-container *ngFor="let message of messageContainer.messages">
-                <div class="message-item">
-                    <div class="d-inline-flex text-dark">
-                        <span class="fs-5">{{ message.content }}</span>
+                <div class="d-flex flex-row message-container" *ngIf="message.type === messageType.TEXT">
+                    <div class="message-item">
+                        <div *ngIf="message?.parentMessage?.id" class="mb-0 p-1 bg-gray-100 text-gray-500">
+                            Trả lời: {{ message.parentMessage.content }}
+                        </div>
+                        <div class="d-inline-flex text-dark">
+                            <span class="fs-5">{{ message.content }}</span>
+                        </div>
                     </div>
+                    <div class="message-tool align-items-center flex-row ms-2">
+                        <!-- <div class="d-flex align-items-center justify-content-center p-2 rounded bg-hover-gray-300">
+                            <i class="ki-solid ki-emoji-happy fs-5 text-gray-500"></i>
+                        </div> -->
+                        <app-reaction [color]="'gray-500'"></app-reaction>
+                        <div
+                            class="d-flex align-items-center justify-content-center p-2 rounded bg-hover-gray-300"
+                            (click)="
+                                send({
+                                    user: messageContainer.user,
+                                    content: message.content,
+                                    id: message.id
+                                })
+                            "
+                        >
+                            <i class="ki-solid ki-pencil fs-5 text-gray-500"></i>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-center p-2 rounded bg-hover-gray-300">
+                            <i class="ki-solid ki-pin fs-5 text-gray-500"></i>
+                        </div>
+                        <span class="ms-2 fs-8 text-gray-500">
+                            {{ message.createdAt | date : 'HH:mm dd-MM-yyyy' }}
+                        </span>
+                    </div>
+                </div>
+                <div class="h-150px w-200px" *ngIf="message.image">
+                    <img [src]="message.image" alt="" class="w-100 h-100 rounded" />
                 </div>
             </ng-container>
         </div>
@@ -18,12 +50,44 @@
     <div class="mb-1 d-flex flex-row flex-row-reverse">
         <div class="d-flex flex-column">
             <ng-container *ngFor="let message of messageContainer.messages">
-                <div class="message-item-owner ms-2 text-end">
-                    <div class="d-inline-flex bg-info align-self-end text-white">
-                        <span class="fs-5">
-                            {{ message.content }}
+                <div
+                    class="message-container d-flex flex-row flex-end align-items-center"
+                    *ngIf="message.type === messageType.TEXT"
+                >
+                    <div class="message-tool align-items-center flex-row ms-2">
+                        <span class="ms-2 fs-8 text-gray-500">
+                            {{ message.createdAt | date : 'HH:mm dd-MM-yyyy' }}
                         </span>
+                        <div class="d-flex align-items-center justify-content-center p-2 rounded bg-hover-gray-300">
+                            <i class="ki-solid ki-pin fs-5 text-gray-500"></i>
+                        </div>
+                        <div
+                            class="d-flex align-items-center justify-content-center p-2 rounded bg-hover-gray-300"
+                            (click)="
+                                send({
+                                    user: messageContainer.user,
+                                    content: message.content,
+                                    id: message.id
+                                })
+                            "
+                        >
+                            <i class="ki-solid ki-pencil fs-5 text-gray-500"></i>
+                        </div>
+                        <app-reaction [color]="'gray-500'"></app-reaction>
                     </div>
+                    <div class="message-item-owner ms-2 text-end">
+                        <div *ngIf="message?.parentMessage?.id" class="mb-0 p-1 bg-gray-100 text-gray-500">
+                            Trả lời: {{ message.parentMessage.content }}
+                        </div>
+                        <div class="d-inline-flex bg-info align-self-end text-white">
+                            <span class="fs-5">
+                                {{ message.content }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="h-150px w-200px align-self-end" *ngIf="message.image">
+                    <img [src]="message.image" alt="" class="w-100 h-100 rounded" />
                 </div>
             </ng-container>
         </div>

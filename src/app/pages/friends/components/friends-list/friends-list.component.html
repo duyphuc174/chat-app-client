@@ -12,6 +12,7 @@
                     <ng-container *ngFor="let friend of friendsList">
                         <div class="col-xl-6 col-12">
                             <app-friends-item
+                                (clickFirstButton)="delete($event)"
                                 [friend]="friend"
                                 [secondButtonTitle]="'Nhắn tin'"
                                 [customClass]="'border border-gray-200'"

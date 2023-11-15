@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { FriendModel } from '../../_models/friend.model';
+import { FriendModel, FriendStatus } from '../../_models/friend.model';
 import { FriendService } from '../../_services/friend.service';
 
 @Component({
@@ -25,9 +25,22 @@ export class FriendsFindComponent implements OnInit {
         this.isLoadingSubject.next(true);
         this.friendService.getFriends().subscribe((res) => {
             if (res) {
-                this.friendsSubject.next(res);
+                this.friendsSubject.next(this.friendService.friends);
             }
             this.isLoadingSubject.next(false);
         });
+    }
+
+    submitFriend(friend: FriendModel) {
+        if (friend.friendStatus === FriendStatus.WAITING_FOR_ACCEPT) {
+            this.friendService.deleteFriend(friend.user.id).subscribe((res) => {
+                this.loadData();
+            });
+        }
+        if (friend.friendStatus === FriendStatus.NO_RELATIVE) {
+            this.friendService.addFriend(friend.user.id).subscribe((res) => {
+                this.loadData();
+            });
+        }
     }
 }

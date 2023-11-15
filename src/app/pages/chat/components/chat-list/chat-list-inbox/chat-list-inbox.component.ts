@@ -45,7 +45,7 @@ export class ChatListInboxComponent implements OnInit {
         this.chatService.getConversations().subscribe((res) => {
             if (res) {
                 this.conversationsSubject.next(res);
-                this.router.navigate([`chat/messages/${res[0].id}`]);
+                // this.router.navigate([`chat/messages/${res[0].id}`]);
             }
             this.isLoadSubject.next(false);
         });

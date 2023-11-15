@@ -17,6 +17,7 @@ export class FriendsItemComponent implements OnInit, OnChanges {
     @Output() clickFirstButton: EventEmitter<any> = new EventEmitter<any>();
     @Output() clickSecondButton: EventEmitter<any> = new EventEmitter<any>();
     friendStatus = FriendStatus;
+    getTextStatus = getTextFriendStatus;
 
     constructor(private router: Router) {}
 
@@ -33,6 +34,7 @@ export class FriendsItemComponent implements OnInit, OnChanges {
     clickSecondBtn() {
         this.clickSecondButton.emit(this.friend);
         // this.goToChat();
+        this.router.navigate([`chat/messages/single/${this.friend.user.id}`]).then();
     }
 
     ngOnChanges(changes: SimpleChanges): void {

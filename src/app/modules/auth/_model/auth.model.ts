@@ -9,6 +9,7 @@ export class UserModel {
     birthday: Date;
     role: UserRole;
     token: string;
+    createdAt: Date;
 
     setData(data) {
         this.id = data.id;
@@ -20,6 +21,7 @@ export class UserModel {
         this.description = data.description || '';
         this.birthday = new Date(data.dateOfBirth) || null;
         this.role = data.role || UserRole.USER;
+        this.createdAt = new Date(data.created_at);
     }
 }
 
