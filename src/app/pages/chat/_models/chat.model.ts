@@ -66,6 +66,7 @@ export class MessageModel {
     userSent: UserModel;
     images: string[];
     messageParent: ParentMessage;
+    reactions: string[];
 
     setData(data) {
         this.id = data.id;
@@ -84,6 +85,14 @@ export class MessageModel {
             const mess = new ParentMessage();
             mess.setData(data.parents);
             this.messageParent = mess;
+        }
+        if (data?.reaction?.length) {
+            this.reactions = [];
+            data?.reaction.forEach((react) => {
+                this.reactions.push(react.reaction);
+            });
+        } else {
+            this.reactions = null;
         }
     }
 }
@@ -113,6 +122,7 @@ export class MessageContainerItem {
     parentMessage: ParentMessage;
     image: string;
     type: MessageType;
+    reactions: string[];
 
     setData(data) {
         this.id = data.id;
@@ -128,6 +138,11 @@ export class MessageContainerItem {
             this.image = data.images[0].file;
         }
         this.type = data.type;
+        if (data?.reactions?.length) {
+            this.reactions = data.reactions;
+        } else {
+            this.reactions = null;
+        }
     }
 
     setData2(data) {

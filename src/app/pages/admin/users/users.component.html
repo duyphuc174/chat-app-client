@@ -34,10 +34,10 @@
                                 <td>{{ user.createdAt }}</td>
                                 <td>{{ user.role }}</td>
                                 <td>
-                                    <button class="btn btn-icon btn-warning me-3">
+                                    <!-- <button class="btn btn-icon btn-warning me-3">
                                         <i class="ki-outline ki-notepad-edit"></i>
-                                    </button>
-                                    <button class="btn btn-icon btn-danger">
+                                    </button> -->
+                                    <button class="btn btn-icon btn-danger" (click)="deleteUser(user.id)">
                                         <i class="ki-outline ki-trash"></i>
                                     </button>
                                 </td>

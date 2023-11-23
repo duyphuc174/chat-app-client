@@ -82,6 +82,7 @@ export class ChatBoxComponent implements OnInit, OnChanges, OnDestroy {
         this.routeSubscription = this.activatedRoute.params.subscribe((param) => {
             if (this.type === 'single') {
                 this.userId = +param.id;
+
                 this.loadDataSingle();
             }
             if (this.type === 'group') {
@@ -125,6 +126,8 @@ export class ChatBoxComponent implements OnInit, OnChanges, OnDestroy {
             if (res) {
                 this.conversationSubject.next(res);
                 this.conversationId = res.id;
+                console.log(this.conversationId);
+                this.loadPusher();
                 this.loadMessages();
             } else {
                 this.profileService.getUser(this.userId).subscribe((res) => {
@@ -199,7 +202,7 @@ export class ChatBoxComponent implements OnInit, OnChanges, OnDestroy {
                 content: content,
             };
             this.chatService.createConversationByUser(body).subscribe((res) => {
-                console.log(res);
+                window.location.reload();
             });
         } else {
             const body: IBodyPostMessage = {
@@ -228,6 +231,8 @@ export class ChatBoxComponent implements OnInit, OnChanges, OnDestroy {
         this.pusherService.setChannel(this.pusherChannelName);
         this.pusherChannelEvents = `messages-sent-${this.conversationId}`;
         this.pusherService.bind(this.pusherChannelEvents, (res) => {
+            console.log(res);
+
             const mess = new MessageModel();
             mess.setData(res.data);
             this.insertNewMessage(mess);

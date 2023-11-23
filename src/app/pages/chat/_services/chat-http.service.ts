@@ -54,6 +54,18 @@ export class ChatHttpService {
         return this.http.post<any>(`${API_REACTION_URL}/create`, body);
     }
 
+    deleteReaction(id): Observable<any> {
+        return this.http.delete<any>(`${API_REACTION_URL}/delete/${id}`);
+    }
+
+    leaveGroup(id) {
+        return this.http.post<any>(`${API_BASE_URL}/conversationMember/delete/${id}`, { type: 'leave' });
+    }
+
+    addMember(id, data) {
+        return this.http.post<any>(`${API_BASE_URL}/conversationMember/add/${id}`, data);
+    }
+
     // leaveConversation(id): Observable<any> {
     //     return this.http.delete<any>(`${API_BASE_URL}/conversationMember/delete/${id}`, {type: 'leave'})
     // }

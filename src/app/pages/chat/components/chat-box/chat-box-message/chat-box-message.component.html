@@ -10,15 +10,45 @@
                         <div *ngIf="message?.parentMessage?.id" class="mb-0 p-1 bg-gray-100 text-gray-500">
                             Trả lời: {{ message.parentMessage.content }}
                         </div>
-                        <div class="d-inline-flex text-dark">
-                            <span class="fs-5">{{ message.content }}</span>
+                        <div
+                            class="d-inline-flex text-dark position-relative"
+                            [ngClass]="message.reactions ? 'mb-5' : ''"
+                        >
+                            <span class="fs-5">{{ message.content }} </span>
+                            <div
+                                class="position-absolute top-100 start-100 translate-middle p-0"
+                                *ngIf="message?.reactions"
+                            >
+                                <div class="d-flex flex-row align-items-center h-100 m-0 p-1 bg-primary">
+                                    <ng-container *ngFor="let r of message.reactions">
+                                        <div class="p-0 m-0 bg-primary" style="font-size: 12px">{{ r }}</div>
+                                    </ng-container>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="message-tool align-items-center flex-row ms-2">
                         <!-- <div class="d-flex align-items-center justify-content-center p-2 rounded bg-hover-gray-300">
                             <i class="ki-solid ki-emoji-happy fs-5 text-gray-500"></i>
                         </div> -->
-                        <app-reaction [color]="'gray-500'"></app-reaction>
+                        <!-- <app-reaction [color]="'gray-500'" (sendReaction)="setReaction($event)"></app-reaction> -->
+                        <div
+                            class="d-flex align-items-center justify-content-center rounded-circle reaction"
+                            style="z-index: 99999"
+                        >
+                            <i class="ki-solid ki-emoji-happy fw-bold fs-5 text-gray-500"></i>
+                            <div class="reaction-list">
+                                <ng-container *ngFor="let reaction of reactions">
+                                    <div
+                                        class="reaction-list-item"
+                                        (click)="sendReaction(message.id, reaction.content)"
+                                    >
+                                        {{ reaction.content }}
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+
                         <div
                             class="d-flex align-items-center justify-content-center p-2 rounded bg-hover-gray-300"
                             (click)="
@@ -31,8 +61,12 @@
                         >
                             <i class="ki-solid ki-pencil fs-5 text-gray-500"></i>
                         </div>
-                        <div class="d-flex align-items-center justify-content-center p-2 rounded bg-hover-gray-300">
-                            <i class="ki-solid ki-pin fs-5 text-gray-500"></i>
+                        <div
+                            *ngIf="message.reactions"
+                            class="d-flex align-items-center justify-content-center p-2 rounded bg-hover-gray-300"
+                            (click)="deleteReaction(message.id)"
+                        >
+                            <i class="ki-solid ki-trash fs-5 text-gray-500"></i>
                         </div>
                         <span class="ms-2 fs-8 text-gray-500">
                             {{ message.createdAt | date : 'HH:mm dd-MM-yyyy' }}
@@ -55,11 +89,18 @@
                     *ngIf="message.type === messageType.TEXT"
                 >
                     <div class="message-tool align-items-center flex-row ms-2">
-                        <span class="ms-2 fs-8 text-gray-500">
+                        <span class="ms-2 fs-8 text-gray-500 positon-relative">
                             {{ message.createdAt | date : 'HH:mm dd-MM-yyyy' }}
+                            <div class="position-absolute top-100 start-100 translate-middle">
+                                <div class="p-2 border bg-gray-200"></div>
+                            </div>
                         </span>
-                        <div class="d-flex align-items-center justify-content-center p-2 rounded bg-hover-gray-300">
-                            <i class="ki-solid ki-pin fs-5 text-gray-500"></i>
+                        <div
+                            (click)="deleteReaction(message.id)"
+                            class="d-flex align-items-center justify-content-center p-2 rounded bg-hover-gray-300"
+                            *ngIf="message.reactions"
+                        >
+                            <i class="ki-solid ki-trash fs-5 text-gray-500"></i>
                         </div>
                         <div
                             class="d-flex align-items-center justify-content-center p-2 rounded bg-hover-gray-300"
@@ -73,16 +114,44 @@
                         >
                             <i class="ki-solid ki-pencil fs-5 text-gray-500"></i>
                         </div>
-                        <app-reaction [color]="'gray-500'"></app-reaction>
+                        <div
+                            class="d-flex align-items-center justify-content-center rounded-circle reaction"
+                            style="z-index: 99999"
+                        >
+                            <i class="ki-solid ki-emoji-happy fw-bold fs-5 text-gray-500"></i>
+                            <div class="reaction-list">
+                                <ng-container *ngFor="let reaction of reactions">
+                                    <div
+                                        class="reaction-list-item"
+                                        (click)="sendReaction(message.id, reaction.content)"
+                                    >
+                                        {{ reaction.content }}
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
                     </div>
                     <div class="message-item-owner ms-2 text-end">
                         <div *ngIf="message?.parentMessage?.id" class="mb-0 p-1 bg-gray-100 text-gray-500">
                             Trả lời: {{ message.parentMessage.content }}
                         </div>
-                        <div class="d-inline-flex bg-info align-self-end text-white">
+                        <div
+                            class="d-inline-flex bg-info align-self-end text-white position-relative"
+                            [ngClass]="message.reactions ? 'mb-5' : ''"
+                        >
                             <span class="fs-5">
                                 {{ message.content }}
                             </span>
+                            <div
+                                class="position-absolute top-100 start-0 translate-middle p-0"
+                                *ngIf="message?.reactions"
+                            >
+                                <div class="d-flex flex-row align-items-center h-100 m-0 p-1 bg-primary">
+                                    <ng-container *ngFor="let r of message.reactions">
+                                        <div class="p-0 m-0 bg-primary" style="font-size: 12px">{{ r }}</div>
+                                    </ng-container>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

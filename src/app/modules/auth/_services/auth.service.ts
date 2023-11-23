@@ -110,4 +110,30 @@ export class AuthService {
         }
         return false;
     }
+
+    getUsers(): Observable<any> {
+        return this.authHttpService.getUsers().pipe(
+            map((res) => {
+                return res.data.map((item) => {
+                    const u = new UserModel();
+                    u.setData(item);
+                    return u;
+                });
+            }),
+            catchError((err) => {
+                return of(undefined);
+            }),
+        );
+    }
+
+    deleteUser(id): Observable<any> {
+        return this.authHttpService.deleteUser(id).pipe(
+            map((res) => {
+                return res;
+            }),
+            catchError((err) => {
+                return of(undefined);
+            }),
+        );
+    }
 }

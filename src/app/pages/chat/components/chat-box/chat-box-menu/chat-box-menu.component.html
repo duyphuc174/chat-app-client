@@ -90,6 +90,9 @@
                                 </div>
                             </div>
                         </ng-container>
+                        <div class="text-center mt-3" (click)="addMember()">
+                            <div class="btn btn-secondary">Thêm thành viên</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -133,9 +136,9 @@
                         <span>Quyền riêng tư</span>
                         <i class="ki-solid me-2" [ngClass]="isShowFileStorage ? 'ki-up' : 'ki-down'"></i>
                     </div>
-                    <div *ngIf="isShowFileStorage" class="">
+                    <div *ngIf="isShowFileStorage && conversation.type === 'group'" class="">
                         <div class="menu-item menu-item-click text-danger">
-                            <div class="d-flex flex-row align-items-center">
+                            <div class="d-flex flex-row align-items-center" (click)="leave()">
                                 <i class="ki-outline ki-exit-right fs-5 me-2 fw-500"></i>
                                 <span>Rời nhóm</span>
                             </div>

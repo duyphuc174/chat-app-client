@@ -116,4 +116,25 @@ export class ChatService {
             catchError(() => of(undefined)),
         );
     }
+
+    deleteReaction(id): Observable<any> {
+        return this.chatHttpService.deleteReaction(id).pipe(
+            map((res) => res),
+            catchError(() => of(undefined)),
+        );
+    }
+
+    leaveGroup(id): Observable<any> {
+        return this.chatHttpService.leaveGroup(id).pipe(
+            map((res) => res),
+            catchError(() => of(undefined)),
+        );
+    }
+
+    addMember(id, data): Observable<any> {
+        return this.chatHttpService.addMember(id, data).pipe(
+            map((res) => res),
+            catchError(() => of(undefined)),
+        );
+    }
 }

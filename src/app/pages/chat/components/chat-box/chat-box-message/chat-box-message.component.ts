@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { MessageContainer, MessageType } from '../../../_models/chat.model';
+import { MessageContainer, MessageType, listReactions } from '../../../_models/chat.model';
 import { AuthService } from 'src/app/modules/auth';
 import { UserModel } from 'src/app/modules/auth/_model/auth.model';
 import { ChatService } from '../../../_services/chat.service';
@@ -18,6 +18,7 @@ export class ChatBoxMessageComponent {
     @Input() messageContainer: MessageContainer;
     ownerId: number;
     messageType = MessageType;
+    reactions = listReactions;
 
     constructor(private auth: AuthService, private chatService: ChatService) {
         this.ownerId = this.auth.currentUserValue.id;
@@ -27,7 +28,20 @@ export class ChatBoxMessageComponent {
         this.sentMessageResponse.emit(e);
     }
 
-    sendReaction(reaction) {
+    sendReaction(mess_id, reaction) {
         // this.chatService
+        this.chatService.createReaction({ message_id: mess_id, reaction: reaction }).subscribe((res) => {
+            window.location.reload();
+        });
+    }
+
+    deleteReaction(id) {
+        this.chatService.deleteReaction(id).subscribe((res) => {
+            window.location.reload();
+        });
+    }
+
+    setReaction(e) {
+        console.log(e);
     }
 }

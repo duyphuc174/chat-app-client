@@ -89,7 +89,7 @@
     </div>
     <app-modal-footer
         (submitModal)="submit()"
-        [buttonName]="'Tạo nhóm'"
+        [buttonName]="isAddMember ? 'Thêm thành viên' : 'Tạo nhóm'"
         [disabled]="friendChoosen?.length < 2 || !!form.invalid"
     ></app-modal-footer>
 </form>

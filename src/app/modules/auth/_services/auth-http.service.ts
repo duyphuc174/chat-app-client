@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { ICreateUser } from '../_model/auth.model';
 
 const API_AUTH_URL = `${environment.apiUrl}/auth`;
+const API_ADMIN_URL = `${environment.apiUrl}/admin`;
 
 @Injectable({
     providedIn: 'root',
@@ -27,5 +28,13 @@ export class AuthHttpService {
         return this.http.get<any>(`${API_AUTH_URL}/token`, {
             headers: httpHeaders,
         });
+    }
+
+    getUsers(): Observable<any> {
+        return this.http.get<any>(`${API_ADMIN_URL}/users`);
+    }
+
+    deleteUser(id): Observable<any> {
+        return this.http.delete<any>(`${API_ADMIN_URL}/user/delete/${id}`);
     }
 }

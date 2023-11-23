@@ -21,6 +21,7 @@ export class ChatConversationCreateComponent implements OnInit {
     imgPreview: string = '';
     imageFile: File;
     form: UntypedFormGroup;
+    isAddMember: boolean = false;
 
     isLoadingSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     isLoading$: Observable<boolean> = this.isLoadingSubject.asObservable();
@@ -33,11 +34,16 @@ export class ChatConversationCreateComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.loadData();
         this.initForm();
+        this.loadData();
     }
 
     loadData() {
+        // if (this.conversation.id) {
+        //     this.form.controls['name'].patchValue(this.conversation.name);
+        //     this.imgPreview = this.conversation.image;
+        //     this.isAddMember = true;
+        // }
         this.isLoadingSubject.next(true);
         this.friendService.getFriends().subscribe((res) => {
             if (res) {
@@ -60,23 +66,37 @@ export class ChatConversationCreateComponent implements OnInit {
     }
 
     submit() {
-        const name = this.form.value.name;
-        const users = this.friendChoosen.map((item) => item.user.id);
-        const formData = new FormData();
-        if (this.imageFile) {
-            formData.append('file[]', this.imageFile);
-        }
-        formData.append('name', name);
-        formData.append('type', 'group');
-        formData.append('status', 'texted');
-        for (let i = 1; i < users.length; i++) {
-            formData.append(`users[]`, users[i].toString());
-        }
-        // formData.append('users[]', JSON.stringify(users));
+        if (this.isAddMember) {
+            let users = this.friendChoosen.map((item) => {
+                if (item) {
+                    return item.user.id;
+                }
+            });
+            users = users.filter((u) => u !== undefined);
+            this.chatService.addMember(this.conversation.id, { users: users }).subscribe((res) => {
+                window.location.reload();
+            });
+        } else {
+            const name = this.form.value.name;
+            const users = this.friendChoosen.map((item) => item.user.id);
+            const formData = new FormData();
+            if (this.imageFile) {
+                formData.append('file[]', this.imageFile);
+            }
+            formData.append('name', name);
+            formData.append('type', 'group');
+            formData.append('status', 'texted');
 
-        this.chatService.createConversation(formData).subscribe((res) => {
-            this.bsModalRef?.hide();
-        });
+            for (let i = 0; i < users.length; i++) {
+                formData.append(`users[]`, users[i].toString());
+            }
+            // formData.append('users[]', JSON.stringify(users));
+
+            this.chatService.createConversation(formData).subscribe((res) => {
+                this.bsModalRef?.hide();
+                window.location.reload();
+            });
+        }
     }
 
     selectUser(friend: FriendModel) {
